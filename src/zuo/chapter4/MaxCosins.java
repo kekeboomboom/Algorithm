@@ -1,4 +1,4 @@
-package zuo.Chapter4;
+package zuo.chapter4;
 
 /**
  * @author keboom

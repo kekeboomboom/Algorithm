@@ -1,4 +1,4 @@
-package zuo.Chapter4;
+package zuo.chapter4;
 
 import java.util.Arrays;
 import java.util.Comparator;
