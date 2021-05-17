@@ -13,6 +13,12 @@ public class Node {
         this.value = data;
     }
 
+    /**
+     *          10
+     *     12        15
+     *  4     7    5    18
+     * @return
+     */
     public static Node getTestTree() {
         Node node10 = new Node(10);
         Node node5 = new Node(5);

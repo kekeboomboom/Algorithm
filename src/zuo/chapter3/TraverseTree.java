@@ -14,7 +14,7 @@ public class TraverseTree {
         if (head == null) {
             return;
         }
-        System.out.println(head.value + " ");
+        System.out.print(head.value + " ");
         preOrderRecur(head.left);
         preOrderRecur(head.right);
     }
@@ -24,7 +24,7 @@ public class TraverseTree {
             return;
         }
         inOrderRecur(head.left);
-        System.out.println(head.value + " ");
+        System.out.print(head.value + " ");
         inOrderRecur(head.right);
     }
 
@@ -34,7 +34,7 @@ public class TraverseTree {
         }
         posOrderRecur(head.left);
         posOrderRecur(head.right);
-        System.out.println(head.value + " ");
+        System.out.print(head.value + " ");
     }
 
     // 非递归
@@ -45,7 +45,7 @@ public class TraverseTree {
             stack.add(head);
             while (!stack.isEmpty()) {
                 head = stack.pop();
-                System.out.println(head.value + " ");
+                System.out.print(head.value + " ");
                 if (head.right != null) {
                     stack.push(head.right);
                 }
@@ -67,7 +67,7 @@ public class TraverseTree {
                     head = head.left;
                 } else {
                     head = stack.pop();
-                    System.out.println(head.value + " ");
+                    System.out.print(head.value + " ");
                     head = head.right;
                 }
             }
@@ -92,7 +92,7 @@ public class TraverseTree {
                 }
             }
             while (!s2.isEmpty()) {
-                System.out.println(s2.pop().value + " ");
+                System.out.print(s2.pop().value + " ");
             }
         }
         System.out.println();
@@ -111,7 +111,7 @@ public class TraverseTree {
                 } else if (c.right != null && h != c.right) {
                     stack.push(c.right);
                 } else {
-                    System.out.println(stack.pop().value + " ");
+                    System.out.print(stack.pop().value + " ");
                     h = c;
                 }
             }

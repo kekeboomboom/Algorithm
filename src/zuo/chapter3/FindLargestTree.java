@@ -2,12 +2,13 @@ package zuo.chapter3;
 
 /**
  * 找到二叉树中的最大搜索二叉子树
+ *
  * @author keboom
  * @date 2021/5/9
  */
 public class FindLargestTree {
 
-     static class ReturnType{
+    class ReturnType {
         public Node maxBSTHead;
         public int maxBSTSize;
         public int min;
@@ -22,7 +23,7 @@ public class FindLargestTree {
     }
 
 
-    public static ReturnType process(Node X) {
+    public ReturnType process(Node X) {
         // base case：如果子树是空树
         if (X == null) {
             return new ReturnType(null, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
@@ -49,29 +50,8 @@ public class FindLargestTree {
         return new ReturnType(maxBSTHead, maxBSTSize, min, max);
     }
 
-    public static Node getMaxBST(Node head) {
+    public Node getMaxBST(Node head) {
         return process(head).maxBSTHead;
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        Node node1 = new Node(1);
-        Node node7 = new Node(7);
-        Node node6 = new Node(6);
-        Node node8 = new Node(8);
-        Node node10 = new Node(10);
-        Node node9 = new Node(9);
-
-        node1.left = node7;
-        node7.left = node6;
-        node7.right = node8;
-        node6.left = node10;
-        node10.left = node9;
-
-        Node res = getMaxBST(node1);
-        System.out.println(res.value + "res.left: " + res.left.value);
     }
 
 }
