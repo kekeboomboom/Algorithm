@@ -43,7 +43,7 @@ public class GetTwoErrNodes {
         if (head == null) {
             return errs;
         }
-        Stack<Node> stack = new Stack<Node>();
+        Stack<Node> stack = new Stack<>();
         Node pre = null;
         while (!stack.isEmpty() || head != null) {
             if (head != null) {

@@ -35,6 +35,7 @@ public class IsSubtree {
         return mi == ms.length ? si - mi : -1;
     }
 
+    // KMP
     private int[] getNextArray(char[] ms) {
         if (ms.length == 1) {
             return new int[]{-1};

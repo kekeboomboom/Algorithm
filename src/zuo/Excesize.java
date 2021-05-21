@@ -1,7 +1,9 @@
 package zuo;
 
 import zuo.chapter3.Node;
+import zuo.chapter3.PrintTree;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -12,7 +14,7 @@ import java.util.Stack;
  */
 public class Excesize {
 
-
+    
 
     /**
      *          10
@@ -21,7 +23,8 @@ public class Excesize {
      */
     public static void main(String[] args) {
         Excesize exc = new Excesize();
-        Node head = Node.getTestTree();
-
+//        Node head = Node.getTestTree();
+        Node bstTree = Node.getBSTTree();
+        new PrintTree().printTree(bstTree);
     }
 }
