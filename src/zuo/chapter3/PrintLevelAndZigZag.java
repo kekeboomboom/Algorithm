@@ -29,7 +29,7 @@ public class PrintLevelAndZigZag {
         System.out.print("Level " + (level++) + " : ");
         while (!queue.isEmpty()) {
             head = queue.poll();
-            System.out.println(head.value + " ");
+            System.out.print(head.value + " ");
             if (head.left != null) {
                 queue.offer(head.left);
                 nLast = head.left;

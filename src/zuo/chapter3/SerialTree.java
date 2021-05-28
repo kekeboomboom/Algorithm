@@ -115,9 +115,9 @@ public class SerialTree {
     }
 
     private Node generateNodeByString(String val) {
-        if (val.equals("#")) {
+        if ("#".equals(val)) {
             return null;
         }
-        return new Node(Integer.valueOf(val));
+        return new Node(Integer.parseInt(val));
     }
 }
