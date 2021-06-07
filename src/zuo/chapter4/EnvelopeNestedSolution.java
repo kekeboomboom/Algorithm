@@ -41,7 +41,26 @@ public class EnvelopeNestedSolution {
     // 长度更小，也是找最长递增子序列
     public int maxEnvelopes(int[][] matrix) {
         Envelope[] envelopes = getSortedEnvelopes(matrix);
-        // to do二分法做最长递增子序列
-        return 1;
+        int[] ends = new int[matrix.length];
+        ends[0] = envelopes[0].wid;
+        int right = 0;
+        int l = 0;
+        int r = 0;
+        int m = 0;
+        for (int i = 1; i < envelopes.length; i++) {
+            l = 0;
+            r = right;
+            while (l <= r) {
+                m = (l + r) / 2;
+                if (envelopes[i].wid > ends[m]) {
+                    l = m + 1;
+                } else {
+                    r = m - 1;
+                }
+            }
+            right = Math.max(right, l);
+            ends[l] = envelopes[i].wid;
+        }
+        return right + 1;
     }
 }

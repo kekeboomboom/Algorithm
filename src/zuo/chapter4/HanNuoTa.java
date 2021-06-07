@@ -11,7 +11,7 @@ public class HanNuoTa {
             func(n, "left", "mid", "right");
         }
     }
-    // 递归真的太简洁了，但也抽象。
+
     public void func(int n, String from, String mid, String to) {
         if (n == 1) {
             System.out.println("move from " + from + " to " + to);
