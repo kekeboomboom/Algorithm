@@ -2,3 +2,6 @@
 /out/
 .idea
 Algorithm.iml
+!/src/zuo/Excesize.java
+
+src/zuo/chapter5/

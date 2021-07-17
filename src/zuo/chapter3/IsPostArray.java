@@ -51,18 +51,18 @@ public class IsPostArray {
      * @param posArr
      * @return
      */
-    public Node posArrayToBST(int[] posArr) {
+    public TreeNode posArrayToBST(int[] posArr) {
         if (posArr == null) {
             return null;
         }
         return posToBST(posArr, 0, posArr.length - 1);
     }
 
-    private Node posToBST(int[] posArr, int start, int end) {
+    private TreeNode posToBST(int[] posArr, int start, int end) {
         if (start > end) {
             return null;
         }
-        Node head = new Node(posArr[end]);
+        TreeNode head = new TreeNode(posArr[end]);
         int less = -1;
         int more = end;
         for (int i = start; i < end; i++) {

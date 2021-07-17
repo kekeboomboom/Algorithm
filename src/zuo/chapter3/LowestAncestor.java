@@ -6,12 +6,12 @@ package zuo.chapter3;
  */
 public class LowestAncestor {
 
-    public Node lowestAncestor(Node head, Node o1, Node o2) {
+    public TreeNode lowestAncestor(TreeNode head, TreeNode o1, TreeNode o2) {
         if (head == null || head == o1 || head == o2) {
             return head;
         }
-        Node left = lowestAncestor(head.left, o1, o2);
-        Node right = lowestAncestor(head.right, o1, o2);
+        TreeNode left = lowestAncestor(head.left, o1, o2);
+        TreeNode right = lowestAncestor(head.right, o1, o2);
         if (left != null && right != null) {
             return head;
         }

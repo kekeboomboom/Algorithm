@@ -6,7 +6,7 @@ package zuo.chapter3;
  */
 public class IsSubtree {
 
-    public boolean isSubtree(Node t1, Node t2) {
+    public boolean isSubtree(TreeNode t1, TreeNode t2) {
         String t1Str = serialByPre(t1);
         String t2Str = serialByPre(t2);
         return getIndexof(t1Str, t2Str) != -1;
@@ -58,7 +58,7 @@ public class IsSubtree {
 
     }
 
-    private String serialByPre(Node head) {
+    private String serialByPre(TreeNode head) {
         if (head == null) {
             return "#!";
         }

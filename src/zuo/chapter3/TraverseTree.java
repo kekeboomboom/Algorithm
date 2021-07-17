@@ -10,7 +10,7 @@ public class TraverseTree {
 
     //递归实现
 
-    public void preOrderRecur(Node head) {
+    public void preOrderRecur(TreeNode head) {
         if (head == null) {
             return;
         }
@@ -19,7 +19,7 @@ public class TraverseTree {
         preOrderRecur(head.right);
     }
 
-    public void inOrderRecur(Node head) {
+    public void inOrderRecur(TreeNode head) {
         if (head == null) {
             return;
         }
@@ -28,7 +28,7 @@ public class TraverseTree {
         inOrderRecur(head.right);
     }
 
-    public void posOrderRecur(Node head) {
+    public void posOrderRecur(TreeNode head) {
         if (head == null) {
             return;
         }
@@ -38,10 +38,10 @@ public class TraverseTree {
     }
 
     // 非递归
-    public void preOrderUnRecur(Node head) {
+    public void preOrderUnRecur(TreeNode head) {
         System.out.println("pre-order: ");
         if (head != null) {
-            Stack<Node> stack = new Stack<>();
+            Stack<TreeNode> stack = new Stack<>();
             stack.add(head);
             while (!stack.isEmpty()) {
                 head = stack.pop();
@@ -57,10 +57,10 @@ public class TraverseTree {
         System.out.println();
     }
 
-    public void inOrderUnRecur(Node head) {
+    public void inOrderUnRecur(TreeNode head) {
         System.out.println("in-order: ");
         if (head != null) {
-            Stack<Node> stack = new Stack<>();
+            Stack<TreeNode> stack = new Stack<>();
             while (!stack.isEmpty() || head != null) {
                 if (head != null) {
                     stack.push(head);
@@ -75,11 +75,11 @@ public class TraverseTree {
         System.out.println();
     }
 
-    public void posOrderUnRecur1(Node head) {
+    public void posOrderUnRecur1(TreeNode head) {
         System.out.println("pos-order: ");
         if (head != null) {
-            Stack<Node> s1 = new Stack<>();
-            Stack<Node> s2 = new Stack<>();
+            Stack<TreeNode> s1 = new Stack<>();
+            Stack<TreeNode> s2 = new Stack<>();
             s1.push(head);
             while (!s1.isEmpty()) {
                 head = s1.pop();
@@ -98,12 +98,12 @@ public class TraverseTree {
         System.out.println();
     }
 
-    public void posOrderUnRecur2(Node h) {
+    public void posOrderUnRecur2(TreeNode h) {
         System.out.println("por-order: ");
         if (h != null) {
-            Stack<Node> stack = new Stack<>();
+            Stack<TreeNode> stack = new Stack<>();
             stack.push(h);
-            Node c = null;
+            TreeNode c = null;
             while (!stack.isEmpty()) {
                 c = stack.peek();
                 if (c.left != null && h != c.left && h != c.right) {

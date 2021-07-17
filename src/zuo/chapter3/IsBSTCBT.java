@@ -11,14 +11,14 @@ import java.util.Stack;
 public class IsBSTCBT {
 
     // 左神使用mirrors中序遍历来做
-    public boolean isBST(Node head) {
+    public boolean isBST(TreeNode head) {
         if (head == null) {
             return true;
         }
         boolean res = true;
-        Node pre = null;
-        Node cur1 = head;
-        Node cur2 = null;
+        TreeNode pre = null;
+        TreeNode cur1 = head;
+        TreeNode cur2 = null;
         while (cur1 != null) {
             cur2 = cur1.left;
             if (cur2 != null) {
@@ -43,11 +43,11 @@ public class IsBSTCBT {
     }
 
     // 那么我不会mirrors，那么我就用普通的中序遍历来做了
-    public boolean isBST2(Node head) {
+    public boolean isBST2(TreeNode head) {
         if (head == null) {
             return true;
         }
-        Stack<Node> stack = new Stack<>();
+        Stack<TreeNode> stack = new Stack<>();
         int pre = Integer.MIN_VALUE;
         while (!stack.isEmpty() || head != null) {
             if (head != null) {
@@ -74,14 +74,14 @@ public class IsBSTCBT {
      * @param head
      * @return
      */
-    public boolean isCBT(Node head) {
+    public boolean isCBT(TreeNode head) {
         if (head == null) {
             return true;
         }
-        Queue<Node> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         boolean leaf = false;
-        Node l = null;
-        Node r = null;
+        TreeNode l = null;
+        TreeNode r = null;
         queue.offer(head);
         while (!queue.isEmpty()) {
             head = queue.poll();
@@ -105,7 +105,7 @@ public class IsBSTCBT {
     public static void main(String[] args) {
         IsBSTCBT is = new IsBSTCBT();
 //        Node head = Node.getBSTTree();
-        Node head = Node.getTestTree();
+        TreeNode head = TreeNode.getTestTree();
         System.out.println(is.isBST(head));
         System.out.println(is.isBST2(head));
     }

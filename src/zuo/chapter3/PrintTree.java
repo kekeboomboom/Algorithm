@@ -6,13 +6,13 @@ package zuo.chapter3;
  */
 public class PrintTree {
 
-    public void printTree(Node head) {
+    public void printTree(TreeNode head) {
         System.out.println("Binary Tree: ");
         printInOrder(head, 0, "H", 17);
         System.out.println();
     }
 
-    public void printInOrder(Node head, int height, String to, int len) {
+    public void printInOrder(TreeNode head, int height, String to, int len) {
         if (head == null) {
             return;
         }

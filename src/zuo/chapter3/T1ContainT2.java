@@ -6,7 +6,7 @@ package zuo.chapter3;
  */
 public class T1ContainT2 {
 
-    public boolean contains(Node t1, Node t2) {
+    public boolean contains(TreeNode t1, TreeNode t2) {
         if (t2 == null) {
             return true;
         }
@@ -18,7 +18,7 @@ public class T1ContainT2 {
         return check(t1, t2) || contains(t1.left, t2) || contains(t1.right, t2);
     }
 
-    private boolean check(Node h, Node t2) {
+    private boolean check(TreeNode h, TreeNode t2) {
         if (t2 == null) {
             return true;
         }

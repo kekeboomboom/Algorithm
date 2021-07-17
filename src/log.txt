@@ -1,0 +1,1088 @@
+    public boolean isCBT(TreeNode head) {
+        if (head == null) {
+            return true;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(head);
+        boolean leaf = false;
+        TreeNode l = null;
+        TreeNode r = null;
+        while (!queue.isEmpty()) {
+            head = queue.poll();
+            l = head.left;
+            r = head.right;
+            if ((leaf && (l != null || r != null)) || (l == null && r != null)) {
+                return false;
+            }
+            if (l != null) {
+                queue.offer(l);
+            }
+            if (r != null) {
+                queue.offer(r);
+            } else {
+                leaf = true;
+            }
+        }
+        return true;
+    }
+
+    public TreeNode lowestAncestor(TreeNode head, TreeNode o1, TreeNode o2) {
+        if (head == null || head == o1 || head == o2) {
+            return head;
+        }
+        TreeNode left = lowestAncestor(head.left, o1, o2);
+        TreeNode right = lowestAncestor(head.right, o1, o2);
+        if (left != null && right != null) {
+            return head;
+        }
+        return left != null ? left : right;
+    }
+
+    public int[] getPosArray(int[] pre, int[] in) {
+        if (pre == null || in == null) {
+            return null;
+        }
+        int len = pre.length;
+        int[] pos = new int[len];
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < len; i++) {
+            map.put(in[i], i);
+        }
+        setPos(pre, 0, len - 1, in, 0, len - 1, pos, len - 1, map);
+        return pos;
+    }
+
+    private int setPos(int[] pre, int pi, int pj, int[] in, int ini, int inj, int[] pos, int posi, HashMap<Integer, Integer> map) {
+        if (pi > pj) {
+            return posi;
+        }
+        pos[posi--] = pre[pi];
+        int i = map.get(pre[pi]);
+        posi = setPos(pre, pj - inj + i + 1, pj, in, i + 1, inj, pos, posi, map);
+        return setPos(pre, pi + 1, pi + i - ini, in, ini, i - 1, pos, posi, map);
+    }
+
+    public int[][] muliMatrix(int[][] m1, int[][] m2) {
+        int[][] res = new int[m1.length][m2[0].length];
+        for (int i = 0; i < m1.length; i++) {
+            for (int j = 0; j < m2[0].length; j++) {
+                for (int k = 0; k < m2.length; k++) {
+                    res[i][j] += m1[i][k] * m2[k][j];
+                }
+            }
+        }
+        return res;
+    }
+
+    public int[][] matrixPower(int[][] m, int p) {
+        int[][] res = new int[m.length][m[0].length];
+        for (int i = 0; i < res.length; i++) {
+            res[i][i] = 1;
+        }
+        int[][] tmp = m;
+        for (; p != 0; p >>= 1) {
+            if ((p & 1) != 0) {
+                res = muliMatrix(res, tmp);
+            }
+            tmp = muliMatrix(tmp, tmp);
+        }
+        return res;
+    }
+
+    public int minSum(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int[][] dp = new int[row][col];
+        dp[0][0] = matrix[0][0];
+        for (int i = 1; i < row; i++) {
+            dp[i][0] = dp[i - 1][0] + matrix[i][0];
+        }
+        for (int i = 1; i < col; i++) {
+            dp[0][i] = dp[0][i - 1] + matrix[0][i];
+        }
+        for (int i = 1; i < row; i++) {
+            for (int j = 1; j < col; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j];
+            }
+        }
+        return dp[row - 1][col - 1];
+    }
+
+    public int minCoins(int[] arr, int aim) {
+        if (arr == null || arr.length == 0 || aim < 0) {
+            return -1;
+        }
+        return process(arr, 0, aim);
+    }
+
+    private int process(int[] arr, int index, int aim) {
+        if (index == arr.length) {
+            return aim == 0 ? 0 : -1;
+        }
+        int res = -1;
+        for (int i = 0; aim - arr[index] * i >= 0; i++) {
+            int next = process(arr, index + 1, aim - arr[index] * i);
+            if (next != -1) {
+                res = res == -1 ? next + i : Math.min(res, next + i);
+            }
+        }
+        return res;
+    }
+
+    public int walk(int N, int M, int K, int P) {
+        if (K == 0) {
+            return M == P ? 1 : 0;
+        }
+        if (M == 1) {
+            return walk(N, 2, K - 1, P);
+        }
+        if (M == N) {
+            return walk(N, N - 1, K - 1, P);
+        }
+        return walk(N, M + 1, K - 1, P) + walk(N, M - 1, K - 1, P);
+    }
+
+    public int conis(int[] arr, int index, int aim) {
+        if (index == arr.length) {
+            return aim == 0 ? 1 : 0;
+        }
+        int res = 0;
+        for (int i = 0; aim - arr[index] * i >= 0; i++) {
+            res += conis(arr, index + 1, aim - arr[index] * i);
+            ;
+        }
+        return res;
+    }
+
+    public int[] getdp(int[] arr) {
+        int[] dp = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j]) {
+                    dp[i] = Math.max(dp[j] + 1, dp[i]);
+                }
+            }
+        }
+        return dp;
+    }
+
+    public int[] getRes(int[] dp, int[] arr) {
+        int len = 1;
+        int index = 0;
+        for (int i = 0; i < dp.length; i++) {
+            if (dp[i] > len) {
+                len = dp[i];
+                index = i;
+            }
+        }
+        int[] res = new int[len];
+        res[--len] = arr[index];
+        for (int i = index - 1; i >= 0; i--) {
+            if (arr[i] < arr[index] && dp[i] == dp[index] - 1) {
+                res[--len] = arr[i];
+                index = i;
+            }
+        }
+        return res;
+    }
+
+    public int process3(int[] arr, int index, int aim) {
+        if (index == arr.length) {
+            return aim == 0 ? 1 : 0;
+        }
+        int res = 0;
+        for (int i = 0; aim - arr[index] * i >= 0; i++) {
+            res += process3(arr, index + 1, aim);
+        }
+        return res;
+    }
+
+    public int[] getdp2(int[] arr) {
+        int[] dp = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp;
+    }
+
+    public int[] generate(int[] arr, int[] dp) {
+        int len = 0;
+        int index = 0;
+        for (int i = 0; i < dp.length; i++) {
+            if (dp[i] > len) {
+                len = dp[i];
+                index = i;
+            }
+        }
+        int[] res = new int[len];
+        res[--len] = arr[index];
+        for (int i = index; i >= 0; i--) {
+            if (arr[i] < arr[index] && dp[i] == dp[index] - 1) {
+                res[--len] = arr[i];
+                index = i;
+            }
+        }
+        return res;
+    }
+
+    public int[] getdp3(int[] arr) {
+        int[] dp = new int[arr.length];
+        int[] ends = new int[arr.length];
+        ends[0] = arr[0];
+        dp[0] = 1;
+        int right = 0;
+        int l = 0;
+        int r = 0;
+        int m = 0;
+        for (int i = 1; i < arr.length; i++) {
+            l = 0;
+            r = right;
+            while (l <= r) {
+                m = (l + r) / 2;
+                if (arr[i] > ends[m]) {
+                    l = m + 1;
+                } else {
+                    r = m - 1;
+                }
+            }
+            right = Math.max(right, l);
+            ends[l] = arr[i];
+            dp[i] = l + 1;
+        }
+        return dp;
+    }
+
+    public void hanuota(int n, String from, String mid, String to) {
+        if (n == 1) {
+            System.out.println(from + " move " + to);
+        } else {
+            hanuota(n - 1, from, to, mid);
+            hanuota(1, from, mid, to);
+            hanuota(n - 1, mid, from, to);
+        }
+    }
+
+    public int[][] getdp4(char[] str1, char[] str2) {
+        int[][] dp = new int[str1.length][str2.length];
+        dp[0][0] = str1[0] == str2[0] ? 1 : 0;
+        for (int i = 1; i < str1.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], str1[i] == str2[0] ? 1 : 0);
+        }
+        for (int i = 1; i < str2.length; i++) {
+            dp[0][i] = Math.max(dp[0][i - 1], str1[0] == str2[i] ? 1 : 0);
+        }
+        for (int i = 1; i < str1.length; i++) {
+            for (int j = 1; j < str2.length; j++) {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                if (str1[i] == str2[j]) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1);
+                }
+            }
+        }
+        return dp;
+    }
+
+    public String lcse(String str1, String str2) {
+        if (str1 == null) {
+            return "";
+        }
+        char[] chs1 = str1.toCharArray();
+        char[] chs2 = str2.toCharArray();
+        int[][] dp = getdp4(chs1, chs2);
+        int m = chs1.length - 1;
+        int n = chs2.length - 1;
+        char[] res = new char[dp[m][n]];
+        int index = res.length - 1;
+        while (index >= 0) {
+            if (n > 0 && dp[m][n] == dp[m][n - 1]) {
+                n--;
+            } else if (m > 0 && dp[m][n] == dp[m - 1][n]) {
+                m--;
+            } else {
+                res[index--] = chs1[m];
+                m--;
+                n--;
+            }
+        }
+        return String.valueOf(res);
+    }
+
+    public int[][] getdp5(char[] str1, char[] str2) {
+        int[][] dp = new int[str1.length][str2.length];
+        for (int i = 0; i < str1.length; i++) {
+            if (str1[i] == str2[0]) {
+                dp[i][0] = 1;
+            }
+        }
+        for (int i = 1; i < str2.length; i++) {
+            if (str1[0] == str2[i]) {
+                dp[0][i] = 1;
+            }
+        }
+        for (int i = 1; i < str1.length; i++) {
+            for (int j = 1; j < str2.length; j++) {
+                if (str1[i] == str2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
+            }
+        }
+        return dp;
+    }
+
+    public int minHP1(int[][] m) {
+        if (m == null || m.length == 0 || m[0] == null || m[0].length == 0) {
+            return 1;
+        }
+        int row = m.length;
+        int col = m[0].length;
+        int[][] dp = new int[row--][col--];
+        dp[row][col] = m[row][col] > 0 ? 1 : -m[row][col] + 1;
+        for (int j = col - 1; j >= 0; j--) {
+            dp[row][j] = Math.max(dp[row][j + 1] - m[row][j], 1);
+        }
+        int right = 0;
+        int down = 0;
+        for (int i = row - 1; i >= 0; i--) {
+            dp[i][col] = Math.max(dp[i + 1][col] - m[i][col], 1);
+            for (int j = col - 1; j >= 0; j--) {
+                right = Math.max(dp[i][j + 1] - m[i][j], 1);
+                down = Math.max(dp[i + 1][j] - m[i][j], 1);
+                dp[i][j] = Math.min(right, down);
+            }
+        }
+        return dp[0][0];
+    }
+
+    public int num1(String str) {
+        if (str == null || str.equals("")) {
+            return 0;
+        }
+        char[] chs = str.toCharArray();
+        return process4(chs, 0);
+    }
+
+    private int process4(char[] chs, int i) {
+        if (i == chs.length) {
+            return 1;
+        }
+        if (chs[i] == '0') {
+            return 0;
+        }
+        int res = process4(chs, i + 1);
+        if (i + 1 < chs.length && (chs[i] - '0') * 10 + chs[i + 1] - '0' < 27) {
+            res += process4(chs, i + 2);
+        }
+        return res;
+    }
+
+    public int num2(String str) {
+        if (str == null || str.equals("")) {
+            return 0;
+        }
+        char[] chs = str.toCharArray();
+        int cur = chs[chs.length - 1] == '0' ? 0 : 1;
+        int next = 1;
+        int tmp = 0;
+        for (int i = chs.length - 2; i >= 0; i--) {
+            if (chs[i] == '0') {
+                next = cur;
+                cur = 0;
+            } else {
+                tmp = cur;
+                if ((chs[i] - '0') * 10 + chs[i + 1] - '0' < 27) {
+                    cur += next;
+                }
+                next = tmp;
+            }
+        }
+        return cur;
+    }
+
+    public int win1(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        return Math.max(f(arr, 0, arr.length - 1), s(arr, 0, arr.length - 1));
+    }
+
+    private int f(int[] arr, int i, int j) {
+        if (i == j) {
+            return arr[i];
+        }
+        return Math.max(arr[i] + s(arr, i + 1, j), arr[j] + s(arr, i, j - 1));
+    }
+
+    private int s(int[] arr, int i, int j) {
+        if (i == j) {
+            return 0;
+        }
+        return Math.min(f(arr, i + 1, j), f(arr, i, j - 1));
+    }
+
+    public void preOrder(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(head);
+        while (!stack.isEmpty()) {
+            head = stack.pop();
+            System.out.print(head.value + " ");
+            if (head.right != null) {
+                stack.push(head.right);
+            }
+            if (head.left != null) {
+                stack.push(head.left);
+            }
+        }
+    }
+
+    public void inOrder(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        while (!stack.isEmpty() || head != null) {
+            if (head != null) {
+                stack.push(head);
+                head = head.left;
+            } else {
+                head = stack.pop();
+                System.out.print(head.value + " ");
+                head = head.right;
+            }
+        }
+    }
+
+    public void posOrder(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        Stack<TreeNode> s1 = new Stack<>();
+        Stack<TreeNode> s2 = new Stack<>();
+        s1.push(head);
+        while (!s1.isEmpty()) {
+            head = s1.pop();
+            s2.push(head);
+            if (head.left != null) {
+                s1.push(head.left);
+            }
+            if (head.right != null) {
+                s1.push(head.right);
+            }
+        }
+        while (!s2.isEmpty()) {
+            System.out.print(s2.pop().value + " ");
+        }
+    }
+
+    public int getHeight(TreeNode head, int height) {
+        if (head == null) {
+            return height;
+        }
+        return Math.max(getHeight(head.left, height + 1), getHeight(head.right, height + 1));
+    }
+
+    public void getEdgeMap(TreeNode head, int[][] map, int height) {
+        if (head == null) {
+            return;
+        }
+        map[height][0] = map[height][0] == 0 ? head.value : map[height][0];
+        map[height][1] = head.value;
+        getEdgeMap(head.left, map, height + 1);
+        getEdgeMap(head.right, map, height + 1);
+    }
+
+    public void printLeafNotEdge(TreeNode head, int[][] map,int height) {
+        if (head == null) {
+            return;
+        }
+        if (head.left == null && head.right == null && head.value != map[height][0] && head.value != map[height][1]) {
+            System.out.print(head.value + " ");
+        }
+        printLeafNotEdge(head.left, map, height + 1);
+        printLeafNotEdge(head.right, map, height + 1);
+    }
+
+    public TreeNode unSerial(String res) {
+        String[] split = res.split("!");
+        LinkedList<String> queue = new LinkedList<>();
+        for (String s : split) {
+            queue.offer(s);
+        }
+        return reconPreOrder(queue);
+    }
+
+    private TreeNode reconPreOrder(LinkedList<String> queue) {
+        String value = queue.poll();
+        if (value.equals("#")) {
+            return null;
+        }
+        TreeNode head = new TreeNode(Integer.valueOf(value));
+        head.left = reconPreOrder(queue);
+        head.right = reconPreOrder(queue);
+        return head;
+    }
+
+    public String serialByLevel(TreeNode head) {
+        if (head == null) {
+            return "#!";
+        }
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(head);
+        String res = head.value + "!";
+        while (!queue.isEmpty()) {
+            head = queue.poll();
+            if (head.left != null) {
+                queue.offer(head.left);
+                res += head.left.value + "!";
+            } else {
+                res += "#!";
+            }
+            if (head.right != null) {
+                queue.offer(head.right);
+                res += head.right.value + "!";
+            } else {
+                res += "#!";
+            }
+        }
+        return res;
+    }
+
+    public TreeNode unserialByLevel(String res) {
+        String[] values = res.split("!");
+        int index = 0;
+        TreeNode head = generateNode(values[index++]);
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.offer(head);
+        TreeNode node;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            node.left = generateNode(values[index++]);
+            node.right = generateNode(values[index++]);
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        return head;
+
+    }
+
+    private TreeNode generateNode(String value) {
+        if (value.equals("#!")) {
+            return null;
+        }
+        return new TreeNode(Integer.valueOf(value));
+    }
+
+
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------2021/7/5
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+
+
+    public int fibonaci(int n) {
+        if (n == 1 || n == 2) {
+            return 1;
+        }
+        return fibonaci(n - 1) + fibonaci(n - 2);
+    }
+
+    public int fibonaci2(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+        if (n == 1 || n == 2) {
+            return 1;
+        }
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        dp[2] = 1;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    public int minRoadSum(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return -1;
+        }
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int[][] dp = new int[row][col];
+        dp[0][0] = matrix[0][0];
+        for (int i = 1; i < row; i++) {
+            dp[i][0] = dp[i - 1][0] + matrix[i][0];
+        }
+        for (int i = 1; i < col; i++) {
+            dp[0][i] = dp[0][i - 1] + matrix[0][i];
+        }
+        for (int i = 1; i < row; i++) {
+            for (int j = 1; j < col; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j];
+            }
+        }
+        return dp[row - 1][col - 1];
+
+    }
+
+    public int minCoins(int[] arr, int aim) {
+        if (arr == null || arr.length == 0 || aim <= 0) {
+            return -1;
+        }
+        return process(arr, 0, aim);
+    }
+
+    private int process(int[] arr, int index, int aim) {
+        if (index == arr.length) {
+            return aim == 0 ? 0 : -1;
+        }
+        int res = -1;
+        for (int i = 0; aim - i * arr[index] >= 0; i++) {
+            int next = process(arr, index + 1, aim - i * arr[index]);
+            if (next != -1) {
+                res = res == -1 ? next + i : Math.min(next + i, res);
+            }
+        }
+        return res;
+    }
+
+    public int methodNum(int[] arr, int cur, int step, int end) {
+        if (step == 0) {
+            return cur == end ? 1 : 0;
+        }
+        if (cur == 0) {
+            return methodNum(arr, cur + 1, step - 1, end);
+        }
+        if (cur == arr.length - 1) {
+            return methodNum(arr, cur - 1, step - 1, end);
+        }
+        return methodNum(arr, cur + 1, step - 1, end) + methodNum(arr, cur - 1, step - 1, end);
+    }
+
+    public int methodNumDP(int[] arr, int cur, int step, int target) {
+        if (arr == null || arr.length == 0 || cur < 0 || cur >= arr.length) {
+            return -1;
+        }
+        int[][] dp = new int[step + 1][cur];
+        dp[0][target] = 1;
+        for (int i = 1; i <= step; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (j == 0) {
+                    dp[i][j] = dp[i - 1][j + 1];
+                } else if (j == arr.length - 1) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j + 1];
+                }
+            }
+        }
+        return dp[step][cur];
+    }
+
+    public int coins(int[] arr, int aim) {
+        if (arr.length == 0 || aim < 0) {
+            return 0;
+        }
+        return process2(arr, 0, aim);
+    }
+
+    private int process2(int[] arr, int index, int aim) {
+        if (index == arr.length) {
+            return aim == 0 ? 1 : 0;
+        }
+        int res = 0;
+        for (int i = 0; aim - i * arr[index] >= 0; i++) {
+            res += process2(arr, index + 1, aim - i * arr[index]);
+        }
+        return res;
+    }
+
+    public int[] getdp(int[] arr) {
+        int[] dp = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (arr[j] < arr[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp;
+    }
+
+    public int[] getArr(int[] dp, int[] arr) {
+        int len = 1;
+        int index = 0;
+        for (int i = 0; i < dp.length; i++) {
+            if (dp[i] > len) {
+                len = dp[i];
+                index = i;
+            }
+        }
+        int[] res = new int[len];
+        res[--len] = arr[index];
+        for (int i = index - 1; i >= 0; i--) {
+            if (arr[index] > arr[i] && dp[index] == dp[i] + 1) {
+                res[--len] = arr[i];
+                index = i;
+            }
+        }
+        return res;
+    }
+
+    class Evenlop {
+        private int wid;
+        private int len;
+
+        public Evenlop(int len, int wid) {
+            this.wid = wid;
+            this.len = len;
+        }
+    }
+
+    public class EnvelopeComparator implements Comparator<Evenlop> {
+
+        @Override
+        public int compare(Evenlop o1, Evenlop o2) {
+            return o1.len == o2.len ? o2.wid - o1.wid : o1.len - o2.len;
+        }
+    }
+
+    public Evenlop[] getSortedEnvelopes(int[][] matrix) {
+        Evenlop[] res = new Evenlop[matrix.length];
+        for (int i = 0; i < res.length; i++) {
+            Evenlop evenlop = new Evenlop(matrix[i][0], matrix[i][1]);
+            res[i] = evenlop;
+        }
+        Arrays.sort(res, new EnvelopeComparator());
+        return res;
+    }
+
+    public void hanuota(int n, String from, String mid, String to) {
+        if (n == 1) {
+            System.out.println(from + " move " + to);
+        } else {
+            hanuota(n - 1, from, to, mid);
+            hanuota(1, from, mid, to);
+            hanuota(n - 1, mid, from, to);
+        }
+    }
+
+    public int[][] getDp(char[] str1, char[] str2) {
+        int[][] dp = new int[str1.length][str2.length];
+        dp[0][0] = str1[0] == str2[0] ? 1 : 0;
+        for (int i = 1; i < str1.length; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], str1[i] == str2[0] ? 1 : 0);
+        }
+        for (int i = 1; i < str2.length; i++) {
+            dp[0][i] = Math.max(dp[0][i - 1], str1[0] == str2[i] ? 1 : 0);
+        }
+        for (int i = 1; i < str1.length; i++) {
+            for (int j = 1; j < str2.length; j++) {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                if (str1[i] == str2[j]) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1);
+                }
+            }
+        }
+        return dp;
+    }
+
+    public String lcse(String str1, String str2) {
+        if (str1 == null || str2 == null || str1.equals("") || str2.equals("")) {
+            return "";
+        }
+        char[] chs1 = str1.toCharArray();
+        char[] chs2 = str2.toCharArray();
+        int[][] dp = getDp(chs1, chs2);
+        int m = chs1.length - 1;
+        int n = chs2.length - 1;
+        char[] res = new char[dp[m][n]];
+        int index = res.length - 1;
+        while (index >= 0) {
+            if (n > 0 && dp[m][n] == dp[m][n - 1]) {
+                n--;
+            } else if (m > 0 && dp[m][n] == dp[m - 1][n]) {
+                m--;
+            } else {
+                res[index--] = chs1[m];
+                m--;
+                n--;
+            }
+        }
+        return String.valueOf(res);
+    }
+
+    public int[][] getdp2(char[] str1, char[] str2) {
+        int[][] dp = new int[str1.length][str2.length];
+        for (int i = 0; i < str1.length; i++) {
+            if (str1[i] == str2[0]) {
+                dp[i][0] = 1;
+            }
+        }
+        for (int i = 1; i < str2.length; i++) {
+            if (str1[0] == str2[i]) {
+                dp[0][i] = 1;
+            }
+        }
+        for (int i = 1; i < str1.length; i++) {
+            for (int j = 1; j < str2.length; j++) {
+                if (str1[i] == str2[j]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                }
+            }
+        }
+        return dp;
+    }
+
+    public String lcst1(String str1, String str2) {
+        if (str1 == null || str2 == null) {
+            return "";
+        }
+        char[] chs1 = str1.toCharArray();
+        char[] chs2 = str2.toCharArray();
+        int[][] dp = getdp2(chs1, chs2);
+        int index = 0;
+        int len = 0;
+        for (int i = 0; i < dp.length; i++) {
+            for (int j = 0; j < dp[0].length; j++) {
+                if (dp[i][j] > len) {
+                    len = dp[i][j];
+                    index = i;
+                }
+            }
+        }
+        return str1.substring(index - len + 1, index + 1);
+    }
+
+    public void spiralOrderPrint(int[][] matrix) {
+        int tR = 0;
+        int tC = 0;
+        int dR = matrix.length - 1;
+        int dC = matrix[0].length - 1;
+        while (tR <= dR && tC <= dC) {
+            printEdge(matrix, tR++, tC++, dR--, dC--);
+        }
+    }
+
+    private void printEdge(int[][] m, int tR, int tC, int dR, int dC) {
+        if (tR == dR) {
+            for (int i = tC; i <= dC; i++) {
+                System.out.print(m[tR][i] + " ");
+            }
+        } else if (tC == dC) {
+            for (int i = tC; i <= dC; i++) {
+                System.out.print(m[i][tC] + " ");
+            }
+        } else {
+            int curR = tR;
+            int curC = tC;
+            while (curC < dC) {
+                System.out.print(m[tR][curC] + " ");
+                curC++;
+            }
+            while (curR < dR) {
+                System.out.print(m[curR][dC] + " ");
+                curR++;
+            }
+            while (curC > tC) {
+                System.out.print(m[dR][curC] + " ");
+                curC--;
+            }
+            while (curR > tR) {
+                System.out.print(m[curR][tC] + " ");
+                curR--;
+            }
+        }
+    }
+
+    public void spiralOrderPrint2(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+        int tR = 0;
+        int tC = 0;
+        int dR = matrix.length - 1;
+        int dC = matrix[0].length - 1;
+        while (tR <= dR && tC <= dC) {
+            // 我写的是printEdge2(matrix, tR, tC, dR, dC); 这样不就不动了
+            printEdge2(matrix, tR++, tC++, dR--, dC--);
+        }
+    }
+
+    private void printEdge2(int[][] m, int tR, int tC, int dR, int dC) {
+        if (tR == dR) {
+            for (int i = tC; i <= dC; i++) {
+                System.out.print(m[tR][i] + " ");
+            }
+        } else if (tC == dC) {
+            for (int i = tR; i <= dR; i++) {
+                System.out.print(m[i][tC] + " ");
+            }
+        } else {
+            int curR = tR;
+            int curC = tC;
+            while (curC != dC) {
+                System.out.print(m[tR][curC] + " ");
+                curC++;
+            }
+            while (curR != dR) {
+                System.out.print(m[curR][dC] + " ");
+                curR++;
+            }
+            // curC和curR顺手就写成++了！！
+            while (curC != tC) {
+                System.out.print(m[dR][curC] + " ");
+                curC--;
+            }
+            while (curR != tR) {
+                System.out.print(m[curR][tC] + " ");
+                curR--;
+            }
+        }
+    }
+
+    public void rotate(int[][] matrix) {
+        int tR = 0;
+        int tC = 0;
+        int dR = matrix.length - 1;
+        int dC = matrix[0].length - 1;
+        while (tR < dR) {
+            rotateEdge(matrix, tR++, tC++, dR--, dC--);
+        }
+    }
+
+    private void rotateEdge(int[][] m, int tR, int tC, int dR, int dC) {
+        int times = dR - tR;
+        int tmp = 0;
+        for (int i = 0; i != times; i++) {
+            tmp = m[tR][tC + i];
+            m[tR][tC + i] = m[dR - i][tC];
+            m[dR - i][tC] = m[dR][dC - i];
+            m[dR][dC - i] = m[tR + i][dC];
+            m[tR + i][dC] = tmp;
+        }
+    }
+
+    public int[] twoSum(int[] arr, int target) {
+        int[] res = new int[2];
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            if (map.containsKey(target - arr[i])) {
+                res[0] = map.get(target - arr[i]);
+                res[1] = i;
+                return res;
+            }
+            map.put(arr[i], i);
+        }
+        return res;
+    }
+
+
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------2021/7/12
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+------------------------------------------
+
+
+public void printByLevel(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        int level = 1;
+        TreeNode last = head;
+        TreeNode nLast = null;
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(head);
+        System.out.print("level " + (level++) + " : ");
+        while (!queue.isEmpty()) {
+            head = queue.poll();
+            System.out.print(head.value + " ");
+            if (head.left != null) {
+                queue.offer(head.left);
+                nLast = head.left;
+            }
+            if (head.right != null) {
+                queue.offer(head.right);
+                nLast = head.right;
+            }
+            if (head == last && !queue.isEmpty()) {
+                last = nLast;
+                System.out.print("\nlevel " + (level++) + " : ");
+            }
+        }
+    }
+
+    public int[][] merge(int[][] intervals) {
+        if (intervals == null) {
+            return null;
+        }
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+        int[][] res = new int[intervals.length][2];
+        res[0] = intervals[0];
+        int index = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (res[index][1] >= intervals[i][0]) {
+                res[index][1] = Math.max(intervals[i][1],res[index][1]);
+            } else {
+                int[] tmp = {intervals[i][0],intervals[i][1]};
+                res[++index] = tmp;
+            }
+        }
+        return Arrays.copyOf(res, index+1);
+    }
+
+    public TreeNode lowestzu(TreeNode head, TreeNode p1, TreeNode p2) {
+        // 如果当前节点是p1或者p2，就返回
+        if (head == null || head == p1 || head == p2) {
+            return head;
+        }
+        TreeNode left = lowestzu(head.left, p1, p2);
+        TreeNode right = lowestzu(head.right, p1, p2);
+        // 如果left right都不为null 说明当前节点为公共祖先
+        if (left != null && right != null) {
+            return head;
+        }
+        // 如果当前节点不为公共祖先，那就。。。
+        return left != null ? left : right;
+    }

@@ -12,12 +12,12 @@ public class PrintEdgeNode {
      * 打印叶节点但不是边缘节点
      * @param head
      */
-    public void printEdge1(Node head) {
+    public void printEdge1(TreeNode head) {
         if (head == null) {
             return;
         }
         int height = getHeight(head, 0);
-        Node[][] edgeMap = new Node[height][2];
+        TreeNode[][] edgeMap = new TreeNode[height][2];
         setEdgeMap(head, 0, edgeMap);
         for (int i = 0; i != edgeMap.length; i++) {
             System.out.println(edgeMap[i][0].value + " ");
@@ -37,7 +37,7 @@ public class PrintEdgeNode {
      * @param l
      * @param m
      */
-    private void printLeafNotInMap(Node h, int l, Node[][] m) {
+    private void printLeafNotInMap(TreeNode h, int l, TreeNode[][] m) {
         if (h == null) {
             return;
         }
@@ -55,7 +55,7 @@ public class PrintEdgeNode {
      * @param l
      * @param edgeMap
      */
-    private void setEdgeMap(Node h, int l, Node[][] edgeMap) {
+    private void setEdgeMap(TreeNode h, int l, TreeNode[][] edgeMap) {
         if (h == null) {
             return;
         }
@@ -72,7 +72,7 @@ public class PrintEdgeNode {
      * @param height
      * @return
      */
-    private int getHeight(Node head, int height) {
+    private int getHeight(TreeNode head, int height) {
         if (head == null) {
             return height;
         }
@@ -85,7 +85,7 @@ public class PrintEdgeNode {
      * 则开始从此节点依次打印左边缘，右边缘
      * @param head
      */
-    public void printEdge2(Node head) {
+    public void printEdge2(TreeNode head) {
         if (head == null) {
             return;
         }
@@ -106,7 +106,7 @@ public class PrintEdgeNode {
      * @param h
      * @param print
      */
-    private void printRightEdge(Node h, boolean print) {
+    private void printRightEdge(TreeNode h, boolean print) {
         if (h == null) {
             return;
         }
@@ -123,7 +123,7 @@ public class PrintEdgeNode {
      * @param h
      * @param print 树左边界延伸下去的路径为边界节点
      */
-    private void printLeftEdge(Node h, boolean print) {
+    private void printLeftEdge(TreeNode h, boolean print) {
         if (h == null) {
             return;
         }

@@ -14,7 +14,7 @@ public class SerialTree {
      * @param head
      * @return
      */
-    public String serialByPre(Node head) {
+    public String serialByPre(TreeNode head) {
         if (head == null) {
             return "#!";
         }
@@ -29,7 +29,7 @@ public class SerialTree {
      * @param preStr
      * @return
      */
-    public Node reconByPreString(String preStr) {
+    public TreeNode reconByPreString(String preStr) {
         String[] values = preStr.split("!");
         LinkedList<String> queue = new LinkedList<>();
         for (int i = 0; i < values.length; i++) {
@@ -43,12 +43,12 @@ public class SerialTree {
      * @param queue
      * @return
      */
-    private Node reconPreOrder(Queue<String> queue) {
+    private TreeNode reconPreOrder(Queue<String> queue) {
         String value = queue.poll();
         if (value.equals("#")) {
             return null;
         }
-        Node head = new Node(Integer.valueOf(value));
+        TreeNode head = new TreeNode(Integer.valueOf(value));
         head.left = reconPreOrder(queue);
         head.right = reconPreOrder(queue);
         return head;
@@ -60,12 +60,12 @@ public class SerialTree {
      * @param head
      * @return
      */
-    public String serialByLevel(Node head) {
+    public String serialByLevel(TreeNode head) {
         if (head == null) {
             return "#!";
         }
         String res = head.value + "!";
-        Queue<Node> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(head);
         while (!queue.isEmpty()) {
             head = queue.poll();
@@ -91,33 +91,33 @@ public class SerialTree {
      * @param levelStr
      * @return
      */
-    public Node reconByLevelString(String levelStr) {
+    public TreeNode reconByLevelString(String levelStr) {
         String[] values = levelStr.split("!");
         int index = 0;
-        Node head = generateNodeByString(values[index++]);
-        Queue<Node> queue = new LinkedList<>();
+        TreeNode head = generateNodeByString(values[index++]);
+        Queue<TreeNode> queue = new LinkedList<>();
         if (head != null) {
             queue.offer(head);
         }
-        Node node = null;
+        TreeNode treeNode = null;
         while (!queue.isEmpty()) {
-            node = queue.poll();
-            node.left = generateNodeByString(values[index++]);
-            node.right = generateNodeByString(values[index++]);
-            if (node.left != null) {
-                queue.offer(node.left);
+            treeNode = queue.poll();
+            treeNode.left = generateNodeByString(values[index++]);
+            treeNode.right = generateNodeByString(values[index++]);
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
             }
-            if (node.right != null) {
-                queue.offer(node.right);
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
             }
         }
         return head;
     }
 
-    private Node generateNodeByString(String val) {
+    private TreeNode generateNodeByString(String val) {
         if ("#".equals(val)) {
             return null;
         }
-        return new Node(Integer.parseInt(val));
+        return new TreeNode(Integer.parseInt(val));
     }
 }

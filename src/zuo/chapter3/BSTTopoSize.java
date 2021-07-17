@@ -10,7 +10,7 @@ import java.util.Map;
 public class BSTTopoSize {
 
     // 以head为头结点寻找最大拓扑结构大小
-    public int bstTopoSize1(Node head) {
+    public int bstTopoSize1(TreeNode head) {
         if (head == null) {
             return 0;
         }
@@ -23,7 +23,7 @@ public class BSTTopoSize {
     }
 
     // 给定了h，递归得到最大拓扑结构大小
-    private int maxTopo(Node h, Node n) {
+    private int maxTopo(TreeNode h, TreeNode n) {
         if (h != null && n != null && isBSTNode(h, n, n.value)) {
             return maxTopo(h, n.left) + maxTopo(h, n.right) + 1;
         }
@@ -31,7 +31,7 @@ public class BSTTopoSize {
     }
 
     // 判断n节点是否为以h为头结点的二叉搜索树的子节点
-    private boolean isBSTNode(Node h, Node n, int value) {
+    private boolean isBSTNode(TreeNode h, TreeNode n, int value) {
         if (h == null) {
             return false;
         }
@@ -55,12 +55,12 @@ public class BSTTopoSize {
         }
     }
 
-    public int bstTopoSize2(Node head) {
-        Map<Node, Record> map = new HashMap<>();
+    public int bstTopoSize2(TreeNode head) {
+        Map<TreeNode, Record> map = new HashMap<>();
         return posOrder(head, map);
     }
 
-    private int posOrder(Node h, Map<Node, Record> map) {
+    private int posOrder(TreeNode h, Map<TreeNode, Record> map) {
         if (h == null) {
             return 0;
         }
@@ -76,7 +76,7 @@ public class BSTTopoSize {
         return Math.max(lbst + rbst + 1, Math.max(ls, rs));
     }
 
-    private int modifyMap(Node n, int v, Map<Node, Record> m, boolean s) {
+    private int modifyMap(TreeNode n, int v, Map<TreeNode, Record> m, boolean s) {
         if (n == null || (!m.containsKey(n))) {
             return 0;
         }

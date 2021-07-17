@@ -9,12 +9,12 @@ package zuo.chapter3;
 public class FindLargestTree {
 
     class ReturnType {
-        public Node maxBSTHead;
+        public TreeNode maxBSTHead;
         public int maxBSTSize;
         public int min;
         public int max;
 
-        public ReturnType(Node maxBSTHead, int maxBSTSize, int min, int max) {
+        public ReturnType(TreeNode maxBSTHead, int maxBSTSize, int min, int max) {
             this.maxBSTHead = maxBSTHead;
             this.maxBSTSize = maxBSTSize;
             this.min = min;
@@ -23,7 +23,7 @@ public class FindLargestTree {
     }
 
 
-    public ReturnType process(Node X) {
+    public ReturnType process(TreeNode X) {
         // base case：如果子树是空树
         if (X == null) {
             return new ReturnType(null, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
@@ -40,7 +40,7 @@ public class FindLargestTree {
         // 如果只考虑可能性一和二，也就是最大搜索二叉树是X的左子树或者右子树
         int maxBSTSize = Math.max(lData.maxBSTSize, rData.maxBSTSize);
         // 如果只考虑可能性一和二，也就是最大搜索二叉树是X的左子树或者右子树
-        Node maxBSTHead = lData.maxBSTSize >= rData.maxBSTSize ? lData.maxBSTHead : rData.maxBSTHead;
+        TreeNode maxBSTHead = lData.maxBSTSize >= rData.maxBSTSize ? lData.maxBSTHead : rData.maxBSTHead;
         // 利用收集的信息，可以判断是否存在第三种可能
         if (lData.maxBSTHead == X.left && rData.maxBSTHead == X.right
                 && X.value > lData.max && X.value < rData.min) {
@@ -50,7 +50,7 @@ public class FindLargestTree {
         return new ReturnType(maxBSTHead, maxBSTSize, min, max);
     }
 
-    public Node getMaxBST(Node head) {
+    public TreeNode getMaxBST(TreeNode head) {
         return process(head).maxBSTHead;
     }
 

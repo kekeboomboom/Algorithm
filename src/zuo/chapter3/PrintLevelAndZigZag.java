@@ -1,8 +1,6 @@
 package zuo.chapter3;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author keboom
@@ -17,14 +15,14 @@ public class PrintLevelAndZigZag {
      * 所以我们通过last和nLast这两个变量巧妙的标识了每一层的最后一个元素！
      * @param head
      */
-    public void printByLevel(Node head) {
+    public void printByLevel(TreeNode head) {
         if (head == null) {
             return;
         }
-        Queue<Node> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         int level = 1;
-        Node last = head;
-        Node nLast = null;
+        TreeNode last = head;
+        TreeNode nLast = null;
         queue.offer(head);
         System.out.print("Level " + (level++) + " : ");
         while (!queue.isEmpty()) {
@@ -54,15 +52,15 @@ public class PrintLevelAndZigZag {
      * 如果遍历到last则说明该换下一行了
      * @param head
      */
-    public void printByZigZag(Node head) {
+    public void printByZigZag(TreeNode head) {
         if (head == null) {
             return;
         }
-        Deque<Node> dp = new LinkedList<>();
+        Deque<TreeNode> dp = new LinkedList<>();
         int level = 1;
         boolean lr = true;
-        Node last = head;
-        Node nLast = null;
+        TreeNode last = head;
+        TreeNode nLast = null;
         dp.offerFirst(head);
         printLevelAndOrientation(level++, lr);
         while (!dp.isEmpty()) {
@@ -103,6 +101,97 @@ public class PrintLevelAndZigZag {
         System.out.print(lr ? "left to right: " : "right to left");
     }
 
+
+    /**
+     * z形打印二叉树，放到list中
+     * @param head
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode head) {
+        if (head == null) {
+            return null;
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> tmp = new ArrayList<>();
+        Deque<TreeNode> dq = new LinkedList<>();
+        TreeNode last = head;
+        TreeNode nLast = null;
+        boolean lr = true;
+        dq.offerFirst(head);
+        while (!dq.isEmpty()) {
+            if (lr) {
+                head = dq.pollFirst();
+                if (head.left != null) {
+                    dq.offerLast(head.left);
+                    nLast = nLast == null ? head.left : nLast;
+                }
+                if (head.right != null) {
+                    dq.offerLast(head.right);
+                    nLast = nLast == null ? head.right : nLast;
+                }
+            } else {
+                head = dq.pollLast();
+                if (head.right != null) {
+                    dq.offerFirst(head.right);
+                    nLast = nLast == null ? head.right : nLast;
+                }
+                if (head.left != null) {
+                    dq.offerFirst(head.left);
+                    nLast = nLast == null ? head.left : nLast;
+                }
+            }
+            tmp.add(head.value);
+            if (head == last) {
+                lr = !lr;
+                last = nLast;
+                nLast = null;
+                res.add(tmp);
+                tmp = new ArrayList<>();
+            }
+        }
+
+        return res;
+    }
+
+    public List<List<Integer>> levelOrder2(TreeNode head) {
+        if (head == null) {
+            return null;
+        }
+        List<List<Integer>> res = new LinkedList<>();
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(head);
+        while (!queue.isEmpty()) {
+            LinkedList<Integer> tmp = new LinkedList<>();
+            for (int i = queue.size(); i > 0; i--) {
+                TreeNode node = queue.poll();
+                if (res.size() % 2 == 0) {
+                    tmp.addLast(node.value);
+                } else {
+                    tmp.addFirst(node.value);
+                }
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            res.add(tmp);
+        }
+        return res;
+    }
+
+//    public static void main(String[] args) {
+//        List<List<Integer>> lists = exc.levelOrder2(TreeNode.getTestTree());
+//        System.out.println(lists.size());
+//        for (int i = 0; i < lists.size(); i++) {
+//            List<Integer> list = lists.get(i);
+//            System.out.println();
+//            for (Integer integer : list) {
+//                System.out.print(integer + " ");
+//            }
+//        }
+//    }
 
 
 }

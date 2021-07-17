@@ -10,13 +10,13 @@ import java.util.HashMap;
  */
 public class SumMaxPath {
 
-    public int getMaxLength(Node head, int sum) {
+    public int getMaxLength(TreeNode head, int sum) {
         HashMap<Integer, Integer> sumMap = new HashMap<>();
         sumMap.put(0, 0);
         return preOrder(head, sum, 0, 1, 0, sumMap);
     }
 
-    private int preOrder(Node head, int sum, int preSum, int level, int maxLen, HashMap<Integer, Integer> sumMap) {
+    private int preOrder(TreeNode head, int sum, int preSum, int level, int maxLen, HashMap<Integer, Integer> sumMap) {
         if (head == null) {
             return maxLen;
         }

@@ -16,11 +16,11 @@ public class IsBalanceTree {
         }
     }
 
-    public boolean isBalanced(Node head) {
+    public boolean isBalanced(TreeNode head) {
         return process(head).isBalanced;
     }
 
-    private ReturnType process(Node head) {
+    private ReturnType process(TreeNode head) {
         if (head == null) {
             return new ReturnType(true, 0);
         }

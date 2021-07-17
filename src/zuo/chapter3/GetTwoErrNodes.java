@@ -38,13 +38,13 @@ public class GetTwoErrNodes {
      */
 
 
-    public static Node[] getTwoErrNodes2(Node head) {
-        Node[] errs = new Node[2];
+    public static TreeNode[] getTwoErrNodes2(TreeNode head) {
+        TreeNode[] errs = new TreeNode[2];
         if (head == null) {
             return errs;
         }
-        Stack<Node> stack = new Stack<>();
-        Node pre = null;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;
         while (!stack.isEmpty() || head != null) {
             if (head != null) {
                 stack.push(head);
@@ -66,8 +66,8 @@ public class GetTwoErrNodes {
     }
 
     public static void main(String[] args) {
-        Node head = Node.getTestTree();
-        Node[] errs = GetTwoErrNodes.getTwoErrNodes2(head);
+        TreeNode head = TreeNode.getTestTree();
+        TreeNode[] errs = GetTwoErrNodes.getTwoErrNodes2(head);
         System.out.println(errs[0].value + "  " + errs[1].value);
     }
 }
