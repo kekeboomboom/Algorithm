@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.LinkedList;
  */
 public class LeetCode20 {
     public boolean isValid(String s) {
-        if (s.isEmpty()){
+        if (s.isEmpty()) {
             return false;
         }
         Deque<Character> stack = new LinkedList<>();

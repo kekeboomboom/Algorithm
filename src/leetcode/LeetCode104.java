@@ -9,28 +9,13 @@ public class LeetCode104 {
         if (root == null) {
             return 0;
         }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-        return Math.max(left, right) + 1;
+        return maxHeight(root, 0);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//        if (root == null) {
-//            return 0;
-//        } else {
-//            int leftHeight = maxDepth(root.left);
-//            int rightHeight = maxDepth(root.right);
-//            return Math.max(leftHeight, rightHeight) + 1;
-//        }
+    private int maxHeight(TreeNode root, int h) {
+        if (root == null) {
+            return h;
+        }
+        return Math.max(maxHeight(root.left, h + 1), maxHeight(root.right, h + 1));
     }
 }

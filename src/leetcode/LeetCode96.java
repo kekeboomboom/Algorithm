@@ -6,15 +6,15 @@ package leetcode;
  */
 public class LeetCode96 {
     public int numTrees(int n) {
-        if (n==0 || n==1) {
+        if (n == 0 || n == 1) {
             return 1;
         }
         int num = 0;
-//        for (int i = 1; i <= n; i++) {
-            for (int j = 0; j < n; j++) {
-                num += numTrees(j) * numTrees(n-1-j);
-            }
-//        }
+
+        for (int j = 0; j < n; j++) {
+            num += numTrees(j) * numTrees(n - 1 - j);
+        }
+
         return num;
 //        if (n < 3) {
 //            return n;
@@ -44,5 +44,17 @@ public class LeetCode96 {
 //            }
 //        }
 //        return dp[n];
+    }
+
+    public int numTrees2(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] += dp[j] * dp[i - j - 1];
+            }
+        }
+        return dp[n];
     }
 }

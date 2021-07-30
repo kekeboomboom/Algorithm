@@ -9,8 +9,8 @@ public class TreeNode {
     public TreeNode left;
     public TreeNode right;
 
-    public TreeNode(int data) {
-        this.value = data;
+    public TreeNode(int value) {
+        this.value = value;
     }
 
     /**

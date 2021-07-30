@@ -5,74 +5,61 @@ package leetcode;
  * @date 2021/3/4
  */
 public class LeetCode5 {
+
+    //暴力破解
     public String longestPalindrome(String s) {
-//        int len = s.length();
-//        if (len == 1) {
-//            return s;
-//        }
-//        int maxLen = 1;
-//        int begin = 0;
-//
-//        boolean[][] dp = new boolean[len][len];
-//        char[] charArray = s.toCharArray();
-//
-//        for (int i = 0; i < len; i++) {
-//            dp[i][i] = true;
-//        }
-//        for (int j = 1; j < len; j++) {
-//            for (int i = 0; i < j; i++) {
-//                if (charArray[i] != charArray[j]) {
-//                    dp[i][j] = false;
-//                } else {
-//                    if (j - i < 3) {
-//                        dp[i][j] = true;
-//                    } else {
-//                        dp[i][j] = dp[i + 1][j - 1];
-//                    }
-//                }
-//
-//                if (dp[i][j] && j - i + 1 > maxLen) {
-//                    maxLen = j - i + 1;
-//                    begin = i;
-//                }
-//            }
-//        }
-//
-//        return s.substring(begin, begin + maxLen);
-
-
+        String ans = "";
+        int max = 0;
         int len = s.length();
-
-        if (len < 2) {
-            return s;
-        }
-
-        boolean[][] dp = new boolean[len][len];
-        char[] charArray = s.toCharArray();
-        int maxLen = 1;
-        int begin = 0;
-
         for (int i = 0; i < len; i++) {
-            dp[i][i] = true;
-        }
-        for (int j = 1; j < len; j++) {
-            for (int i = 0; i < j; i++) {
-                if (charArray[i] != charArray[j]) {
-                    dp[i][j] = false;
-                } else {
-                    if (j - i < 3) {
-                        dp[i][j] = true;
-                    } else {
-                        dp[i][j] = dp[i + 1][j - 1];
-                    }
-                }
-                if (dp[i][j] && j - i + 1> maxLen){
-                    maxLen = j - i + 1;
-                    begin = i;
+            for (int j = i + 1; j <= len; j++) {
+                String test = s.substring(i, j);
+                if (isPalindrome(test) && test.length() > max) {
+                    ans = test;
+                    max = test.length();
                 }
             }
         }
-        return s.substring(begin, begin + maxLen);
-
+        return ans;
     }
+
+    private boolean isPalindrome(String test) {
+        int len = test.length();
+        for (int i = 0; i < len / 2; i++) {
+            if (test.charAt(i) != test.charAt(len - i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 中心扩散
+    public String longestPalindrome2(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        int start =0;
+        int end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = aroundCenter(s, i, i);
+            int len2 = aroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > (end - start+1)) {
+                start = i - (len-1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private int aroundCenter(String s, int i, int j) {
+        int L = i;
+        int R = j;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
+
 }

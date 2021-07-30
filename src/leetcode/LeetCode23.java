@@ -10,23 +10,6 @@ import java.util.PriorityQueue;
  */
 public class LeetCode23 {
 
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-    }
-
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) {
             return null;
@@ -60,5 +43,28 @@ public class LeetCode23 {
         }
         return dummy.next;
 
+    }
+
+    public ListNode mergeKLists2(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return new ListNode();
+        }
+        PriorityQueue<ListNode> queue = new PriorityQueue<>(lists.length, (o1, o2) -> o1.val - o2.val);
+        for (ListNode node : lists) {
+            if (node != null) {
+                queue.add(node);
+            }
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            cur.next = node;
+            if (node.next != null) {
+                queue.add(node.next);
+            }
+            cur = cur.next;
+        }
+        return dummy.next;
     }
 }
