@@ -6,17 +6,16 @@ package leetcode;
  */
 public class LeetCode538 {
 
+    int sum = 0;
+
     public TreeNode convertBST(TreeNode root) {
         if (root == null) {
             return null;
         }
-        TreeNode right = convertBST(root.right);
-        if (right != null) {
-            root.val = right.val + root.val;
-        }
-        if (root.left != null) {
-            root.left.val = root.val + root.left.val;
-        }
+        convertBST(root.right);
+        sum += root.val;
+        root.val = sum;
+
         convertBST(root.left);
         return root;
     }

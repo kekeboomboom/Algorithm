@@ -1,6 +1,9 @@
 package other;
 
+import java.util.Arrays;
+
 import java.util.Scanner;
+import java.util.TreeMap;
 
 /**
  * @author keboom
@@ -8,60 +11,100 @@ import java.util.Scanner;
  */
 public class Main {
 
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int N = sc.nextInt();
+//        int X = sc.nextInt();
+//        int K = sc.nextInt();
+//        int[] cups = new int[N + 1];
+//        cups[X] = 1;
+//        for (int i = 0; i < K; i++) {
+//            int cup1 = sc.nextInt();
+//            int cup2 = sc.nextInt();
+//            swap(cups,cup1,cup2);
+//        }
+//        for (int i = 1; i <= cups.length; i++) {
+//            if (cups[i] == 1) {
+//                System.out.println(i);
+//                return;
+//            }
+//        }
+//    }
+//
+//    private static void swap(int[] cups, int i, int j) {
+//        int tmp = cups[i];
+//        cups[i] = cups[j];
+//        cups[j] = tmp;
+//    }
+
+    static int n;
+    static int k;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int T = sc.nextInt();
-        String[] result = new String[T];
-        for (int i = 0; i < T; i++) {
-            int n = sc.nextInt();
-            int[] x = new int[n];
-            int[] y = new int[n];
-            for (int j = 0; j < n; j++) {
-                x[j] = sc.nextInt();
-                y[j] = sc.nextInt();
-                if (x[j] == 0) {
-                    result[i] = "Yes";
-                    break;
-                }
+        n = sc.nextInt();
+        k = sc.nextInt();
+        int[] zhan = new int[n + k];
+        for (int i = 0; i < n; i++) {
+            zhan[i] = sc.nextInt();
+        }
+        int max = 0;
+        for (int i = 0; i <= k; i++) {
+            max = maxZao(zhan);
+        }
+        System.out.println(max);
+    }
+
+    private static int maxZao(int[] zhan) {
+        Arrays.sort(zhan);
+        int max = 0;
+        int index=0;
+        for (int i = 1; i < zhan.length; i++) {
+            if (zhan[i] - zhan[i - 1] > max) {
+                max = zhan[i] - zhan[i - 1];
+                index = i;
             }
-            boolean res = sum(x, y);
-            if (res) {
-                result[i] = "Yes";
-            } else {
-                result[i] = "No";
-            }
         }
-
-        for (int i = 0; i < T; i++) {
-            System.out.println(result[i]);
-        }
+        k--;
+        zhan[n++] = (zhan[index] - zhan[index - 1])/2;
+        return max;
     }
 
-    public static boolean sum(int[] x, int[] y){
-        int[] res = {x[0],y[0]};
-        for (int i = 1; i < x.length; i++) {
-            int[] merge = merge(res[0], res[1], x[i], y[i]);
-            res[0] = merge[0];
-            res[1] = merge[1];
-        }
-        if (res[0] == res[1]) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        int n = sc.nextInt();
+//        int m = sc.nextInt();
+//        char[][] mi = new char[n][m];
+//        String s2 = sc.nextLine();
+//        for (int i = 0; i < n; i++) {
+//            String s = sc.nextLine();
+//            System.out.println(i+ "~~~~~");
+//            for (int j = 0; j < s.length(); j++) {
+//                mi[i][j] = s.charAt(j);
+//            }
+//        }
 
-    public static int[] merge(int x1, int y1,int x2,int y2) {
-        int mu = 1;
-        if (y2 % y1 == 0) {
-            mu = y2;
-            x1 = y2/y1 * x1;
-        } else {
-            mu = y1 * y2;
-            x1 = y2 * x1;
-            x2 = y1 * x2;
-        }
-        int x = x1 + x2;
-        return new int[]{x, mu};
-    }
+
+//        int[][] dp = new int[n][m];
+//        dp[0][0] = 0;
+//        for (int i = 1; i < n; i++) {
+//            if (mi[i][0] == '#') {
+//                dp[i][0] = dp[i - 1][0] + 1;
+//            } else {
+//                dp[i][0] = dp[i - 1][0];
+//            }
+//        }
+//        for (int i = 1; i < m; i++) {
+//            if (mi[0][i] == '#') {
+//                dp[0][i] = dp[0][i - 1] + 1;
+//            } else {
+//                dp[0][i] = dp[0][i - 1];
+//            }
+//        }
+//        for (int i = 1; i < n; i++) {
+//            for (int j = 1; j < m; j++) {
+//                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]);
+//            }
+//        }
+//        System.out.println(dp[n-1][m-1]);
+
 }
