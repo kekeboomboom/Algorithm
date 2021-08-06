@@ -18,30 +18,51 @@ public class QuickSort {
      */
     public void sort(int[] arr, int low, int high) {
         if (low < high) {
-            int pi = partition(arr, low, high);
+            int pi = partition2(arr, low, high);
 
             sort(arr, low, pi - 1);
             sort(arr, pi + 1, high);
         }
     }
 
-    public int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+//    public int partition(int[] arr, int low, int high) {
+//        int pivot = arr[high];
+//        int i = (low - 1);
+//        for (int j = low; j < high; j++) {
+//            if (arr[j] <= pivot) {
+//                i++;
+//                int temp = arr[i];
+//                arr[i] = arr[j];
+//                arr[j] = temp;
+//            }
+//        }
+//
+//        int temp = arr[i + 1];
+//        arr[i + 1] = arr[high];
+//        arr[high] = temp;
+//
+//        return i + 1;
+//    }
+
+    /**
+     * 是我理解错了，并不是因为左右选择而导致算法不一样，无论左右都可以用快慢指针来partition
+     * 下面就是以left为基准值，来进行快慢指针
+     * @param arr
+     * @param left
+     * @param right
+     * @return
+     */
+    public int partition2(int[] arr, int left, int right) {
+        int pivot = arr[left];
+        int j = left;
+        for (int i = left; i <= right; i++) {
+            if (arr[i] < pivot) {
+                j++;
+                swap(arr, j, i);
             }
         }
-
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-        return i + 1;
+        swap(arr, left, j);
+        return j;
     }
 
     /**
@@ -50,25 +71,25 @@ public class QuickSort {
      * @param left
      * @param high
      */
-    public static void quickSort2(int[] nums, int left, int right) {
-        if (left >= right) {
-            return;
-        }
-        int i = left - 1;
-        int j = right + 1;
-        int pivot = nums[left];
-        while (i < j) {
-            while (nums[++i] < pivot);
-            while (nums[--j] > pivot);
-            if (i < j) {
-                int tmp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = tmp;
-            }
-        }
-        quickSort2(nums, left, j);
-        quickSort2(nums, j + 1, right);
-    }
+//    public static void quickSort2(int[] nums, int left, int right) {
+//        if (left >= right) {
+//            return;
+//        }
+//        int i = left - 1;
+//        int j = right + 1;
+//        int pivot = nums[left];
+//        while (i < j) {
+//            while (nums[++i] < pivot);
+//            while (nums[--j] > pivot);
+//            if (i < j) {
+//                int tmp = nums[i];
+//                nums[i] = nums[j];
+//                nums[j] = tmp;
+//            }
+//        }
+//        quickSort2(nums, left, j);
+//        quickSort2(nums, j + 1, right);
+//    }
 
     /**
      * 这原来叫三路快排，就是为了数组中存在大量重复元素，而设计的
@@ -117,8 +138,8 @@ public class QuickSort {
 
     public static void main(String[] args) {
         int[] arr= {8,9,4,5,6,5,5,6,3,1,1,5,2,7};
-//        new QuickSort().sort(arr, 0, arr.length - 1);
-        QuickSort.quickSort2(arr,0,arr.length-1);
+        new QuickSort().sort(arr, 0, arr.length - 1);
+//        QuickSort.quickSort2(arr,0,arr.length-1);
         System.out.println(Arrays.toString(arr));
     }
 }
