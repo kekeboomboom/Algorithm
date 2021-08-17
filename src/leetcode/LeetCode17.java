@@ -32,4 +32,36 @@ public class LeetCode17 {
             sb.deleteCharAt(sb.length()-1);
         }
     }
+
+
+
+    String[] map = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations2(String digits) {
+        if (digits.length() == 0) {
+            return new ArrayList<>();
+        }
+        List<String> res = new ArrayList<>();
+        StringBuilder tmp = new StringBuilder();
+        process2(digits, 0, tmp, res);
+        return res;
+    }
+
+    private void process2(String digits, int index, StringBuilder tmp, List<String> res) {
+        if (index == digits.length()) {
+            res.add(tmp.toString());
+            return;
+        }
+        int num = digits.charAt(index) - '0';
+        String str = map[num];
+        for (int i = 0; i < str.length(); i++) {
+            tmp.append(str.charAt(i));
+            process2(digits, index+1, tmp, res);
+            tmp.deleteCharAt(tmp.length() - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> res = new LeetCode17().letterCombinations2("23");
+        System.out.println(res.toString());
+    }
 }
