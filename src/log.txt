@@ -1086,3 +1086,16 @@ public void printByLevel(TreeNode head) {
         // 如果当前节点不为公共祖先，那就。。。
         return left != null ? left : right;
     }
+
+
+select name
+from test
+where name like `a%`
+
+select name
+from test
+where name like `%z`
+
+select name
+from test
+where name like `a%` and name_reverse like `z%`
