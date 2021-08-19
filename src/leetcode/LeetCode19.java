@@ -18,9 +18,10 @@ public class LeetCode19 {
         ListNode cur = head;
         int k = 0;
         while (cur != null) {
-            k++;
             cur = cur.next;
-            if (k > n) {
+            if (k < n) {
+                k++;
+            } else {
                 pre = pre.next;
             }
             if (cur == null) {
