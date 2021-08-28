@@ -22,7 +22,7 @@ public class LeetCode377 {
         int[] dp = new int[target + 1];
         dp[0] = 1;
         // 懂了这个dp思路，这就跟跳台阶一样，当前n的方法数，等于n-1的方法数加上n-2的方法数
-        // 这个只不过是num为步数
+        // 跳台阶是固定的一步或者两步，只不过这个是num步
         for (int i = 1; i < target + 1; i++) {
             for (int num : nums) {
                 if (i >= num) {
