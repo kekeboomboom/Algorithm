@@ -9,8 +9,6 @@ import java.util.List;
  */
 public class LeetCode46 {
 
-
-
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new LinkedList<>();
         LinkedList<Integer> tmp = new LinkedList<>();
