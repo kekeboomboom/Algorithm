@@ -1,8 +1,8 @@
 package SwordPointToOffer.tree;
 
+import common.TreeNode;
 import java.util.*;
 
-import datastructure.TreeNode;
 
 /**
  * @author keboom

@@ -1,4 +1,4 @@
-package zuo.chapter3;
+package common;
 
 /**
  * @author keboom

@@ -1,5 +1,7 @@
 package zuo.chapter3;
 
+import common.TreeNode;
+
 /**
  * 求二叉树中两节点的最大距离
  * @author keboom

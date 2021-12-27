@@ -1,6 +1,6 @@
 package SwordPointToOffer;
 
-import zuo.chapter3.TreeNode;
+import common.TreeNode;
 
 /**
  * @author keboom

@@ -4,6 +4,7 @@ package leetcode;
  * @author keboom
  * @date 2021/3/4
  */
+@Deprecated
 public class TreeNode {
     public int val;
     public TreeNode left;
