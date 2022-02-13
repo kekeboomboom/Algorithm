@@ -1,5 +1,7 @@
 package leetcode;
 
+import common.ListNode;
+
 /**
  * @author keboom
  * @date 2021/7/30

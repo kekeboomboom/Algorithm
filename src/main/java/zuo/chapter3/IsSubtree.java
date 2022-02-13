@@ -64,7 +64,7 @@ public class IsSubtree {
         if (head == null) {
             return "#!";
         }
-        String res = head.value + "!";
+        String res = head.val + "!";
         res += serialByPre(head.left);
         res += serialByPre(head.right);
         return res;

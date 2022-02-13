@@ -19,7 +19,7 @@ public class SerialTree {
         if (head == null) {
             return "#!";
         }
-        String res = head.value + "!";
+        String res = head.val + "!";
         res += serialByPre(head.left);
         res += serialByPre(head.right);
         return res;
@@ -65,19 +65,19 @@ public class SerialTree {
         if (head == null) {
             return "#!";
         }
-        String res = head.value + "!";
+        String res = head.val + "!";
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(head);
         while (!queue.isEmpty()) {
             head = queue.poll();
             if (head.left != null) {
-                res += head.left.value + "!";
+                res += head.left.val + "!";
                 queue.offer(head.left);
             } else {
                 res += "#!";
             }
             if (head.right != null) {
-                res += head.right.value + "!";
+                res += head.right.val + "!";
                 queue.offer(head.right);
             } else {
                 res += "#!";

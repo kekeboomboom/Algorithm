@@ -36,16 +36,16 @@ public class FindLargestTree {
         ReturnType rData = process(X.right);
         // 信息整合
         // 求最小值：X，左子树，右子树
-        int min = Math.min(X.value, Math.min(lData.min, rData.min));
+        int min = Math.min(X.val, Math.min(lData.min, rData.min));
         // 求最大值：X，左子树，右子树
-        int max = Math.max(X.value, Math.max(lData.max, rData.max));
+        int max = Math.max(X.val, Math.max(lData.max, rData.max));
         // 如果只考虑可能性一和二，也就是最大搜索二叉树是X的左子树或者右子树
         int maxBSTSize = Math.max(lData.maxBSTSize, rData.maxBSTSize);
         // 如果只考虑可能性一和二，也就是最大搜索二叉树是X的左子树或者右子树
         TreeNode maxBSTHead = lData.maxBSTSize >= rData.maxBSTSize ? lData.maxBSTHead : rData.maxBSTHead;
         // 利用收集的信息，可以判断是否存在第三种可能
         if (lData.maxBSTHead == X.left && rData.maxBSTHead == X.right
-                && X.value > lData.max && X.value < rData.min) {
+                && X.val > lData.max && X.val < rData.min) {
             maxBSTSize = lData.maxBSTSize + rData.maxBSTSize + 1;
             maxBSTHead = X;
         }

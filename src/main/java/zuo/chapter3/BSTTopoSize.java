@@ -25,7 +25,7 @@ public class BSTTopoSize {
 
     // 给定了h，递归得到最大拓扑结构大小
     private int maxTopo(TreeNode h, TreeNode n) {
-        if (h != null && n != null && isBSTNode(h, n, n.value)) {
+        if (h != null && n != null && isBSTNode(h, n, n.val)) {
             return maxTopo(h, n.left) + maxTopo(h, n.right) + 1;
         }
         return 0;
@@ -39,7 +39,7 @@ public class BSTTopoSize {
         if (h == n) {
             return true;
         }
-        return isBSTNode(h.value > value ? h.left : h.right, n, value);
+        return isBSTNode(h.val > value ? h.left : h.right, n, value);
     }
 
 
@@ -67,8 +67,8 @@ public class BSTTopoSize {
         }
         int ls = posOrder(h.left, map);
         int rs = posOrder(h.right, map);
-        modifyMap(h.left, h.value, map, true);
-        modifyMap(h.right, h.value, map, false);
+        modifyMap(h.left, h.val, map, true);
+        modifyMap(h.right, h.val, map, false);
         Record lr = map.get(h.left);
         Record rr = map.get(h.right);
         int lbst = lr == null ? 0 : lr.l + lr.r + 1;
@@ -82,7 +82,7 @@ public class BSTTopoSize {
             return 0;
         }
         Record r = m.get(n);
-        if ((s && n.value > v) || ((!s) && n.value < v)) {
+        if ((s && n.val > v) || ((!s) && n.val < v)) {
             m.remove(n);
             return r.l + r.r + 1;
         } else {

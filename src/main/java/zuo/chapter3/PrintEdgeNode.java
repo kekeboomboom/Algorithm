@@ -22,12 +22,12 @@ public class PrintEdgeNode {
         TreeNode[][] edgeMap = new TreeNode[height][2];
         setEdgeMap(head, 0, edgeMap);
         for (int i = 0; i != edgeMap.length; i++) {
-            System.out.println(edgeMap[i][0].value + " ");
+            System.out.println(edgeMap[i][0].val + " ");
         }
         printLeafNotInMap(head, 0, edgeMap);
         for (int i = edgeMap.length - 1; i != -1; i--) {
             if (edgeMap[i][0] != edgeMap[i][1]) {
-                System.out.println(edgeMap[i][1].value + " ");
+                System.out.println(edgeMap[i][1].val + " ");
             }
         }
         System.out.println();
@@ -45,7 +45,7 @@ public class PrintEdgeNode {
         }
         // 首先要是叶子结点，并且不是左右边缘
         if (h.left == null && h.right == null && h != m[l][0] && h != m[l][1]) {
-            System.out.println(h.value + " ");
+            System.out.println(h.val + " ");
         }
         printLeafNotInMap(h.left, l + 1, m);
         printLeafNotInMap(h.right, l + 1, m);
@@ -91,7 +91,7 @@ public class PrintEdgeNode {
         if (head == null) {
             return;
         }
-        System.out.println(head.value + " ");
+        System.out.println(head.val + " ");
         if (head.left != null && head.right != null) {
             printLeftEdge(head.left, true);
             printRightEdge(head.left, true);
@@ -115,7 +115,7 @@ public class PrintEdgeNode {
         printRightEdge(h.left, print && h.right == null ? true : false);
         printRightEdge(h.right, print);
         if (print || (h.left == null && h.right == null)) {
-            System.out.println(h.value + " ");
+            System.out.println(h.val + " ");
         }
     }
 
@@ -130,7 +130,7 @@ public class PrintEdgeNode {
             return;
         }
         if (print || (h.left == null && h.right == null)) {
-            System.out.println(h.value + " ");
+            System.out.println(h.val + " ");
         }
         printLeftEdge(h.left, print);
         printLeftEdge(h.right, print && h.left == null ? true : false);

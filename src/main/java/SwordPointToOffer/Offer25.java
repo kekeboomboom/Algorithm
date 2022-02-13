@@ -1,6 +1,6 @@
 package SwordPointToOffer;
 
-import leetcode.ListNode;
+import common.ListNode;
 
 /**
  * @author keboom

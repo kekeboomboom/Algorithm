@@ -1,6 +1,6 @@
 package leetcode;
 
-import java.util.LinkedList;
+import common.ListNode;
 
 /**
  * @author keboom

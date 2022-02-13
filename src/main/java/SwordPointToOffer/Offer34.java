@@ -30,14 +30,14 @@ public class Offer34 {
         if (root == null) {
             return;
         }
-        tmp.add(root.value);
-        sum += root.value;
+        tmp.add(root.val);
+        sum += root.val;
         if (sum == target && root.left == null && root.right == null) {
             res.add(new ArrayList<>(tmp));
         }
         process(root.left,target,sum);
         process(root.right,target,sum);
-        sum -= root.value;
+        sum -= root.val;
         tmp.remove(tmp.size() - 1);
     }
 
@@ -103,8 +103,8 @@ public class Offer34 {
         if (root == null) {
             return;
         }
-        target -= root.value;
-        tmp2.add(root.value);
+        target -= root.val;
+        tmp2.add(root.val);
         if (target == 0 && root.left == null && root.right == null) {
             res2.add(new LinkedList<>(tmp2));
         }

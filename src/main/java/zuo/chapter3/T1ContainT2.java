@@ -25,7 +25,7 @@ public class T1ContainT2 {
             return true;
         }
         // 此还可判断t1子节点是否与t2头结点相等呢！
-        if (h == null || h.value != t2.value) {
+        if (h == null || h.val != t2.val) {
             return false;
         }
         return check(h.left, t2.left) && check(h.right, t2.right);

@@ -34,7 +34,7 @@ public class IsBSTCBT {
                     cur2.right = null;
                 }
             }
-            if (pre != null && pre.value > cur1.value) {
+            if (pre != null && pre.val > cur1.val) {
                 res = false;
             }
             pre = cur1;
@@ -56,11 +56,11 @@ public class IsBSTCBT {
                 head = head.left;
             } else {
                 head = stack.pop();
-                System.out.print(head.value + " ");
-                if (head.value < pre) {
+                System.out.print(head.val + " ");
+                if (head.val < pre) {
                     return false;
                 }
-                pre = head.value;
+                pre = head.val;
                 head = head.right;
             }
         }

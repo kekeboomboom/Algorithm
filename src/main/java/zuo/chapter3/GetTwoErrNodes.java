@@ -52,7 +52,7 @@ public class GetTwoErrNodes {
                 head = head.left;
             } else {
                 head = stack.pop();
-                if (pre != null && pre.value > head.value) {
+                if (pre != null && pre.val > head.val) {
                     // 如果errs[0]为null则说明第一次进来，并且如果整个树只进来一次的话
                     // 就说明是相邻父子节点交换，如果进来第二次，则说明两错误节点不相邻
                     // 数组第一个值不更新，只更新第二个
@@ -69,6 +69,6 @@ public class GetTwoErrNodes {
     public static void main(String[] args) {
         TreeNode head = TreeNode.getTestTree();
         TreeNode[] errs = GetTwoErrNodes.getTwoErrNodes2(head);
-        System.out.println(errs[0].value + "  " + errs[1].value);
+        System.out.println(errs[0].val + "  " + errs[1].val);
     }
 }

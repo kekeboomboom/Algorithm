@@ -23,7 +23,7 @@ public class Offer32 {
             List<Integer> tmp = new ArrayList<>();
             for (int i = queue.size(); i > 0; i--) {
                 root = queue.poll();
-                tmp.add(root.value);
+                tmp.add(root.val);
                 if (root.left != null) {
                     queue.offer(root.left);
                 }
@@ -61,9 +61,9 @@ public class Offer32 {
             for (int i = queue.size(); i > 0; i--) {
                 root = queue.poll();
                 if (res.size() % 2 == 0) {
-                    tmp.offerLast(root.value);
+                    tmp.offerLast(root.val);
                 } else {
-                    tmp.offerFirst(root.value);
+                    tmp.offerFirst(root.val);
                 }
                 if (root.left != null) {
                     queue.offer(root.left);

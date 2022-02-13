@@ -23,7 +23,7 @@ public class Offer54 {
         process(root.right, k);
         m++;
         if (m == k) {
-            res = root.value;
+            res = root.val;
             return;
         }
         process(root.left,k);

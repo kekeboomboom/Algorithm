@@ -15,7 +15,7 @@ public class TraverseTree {
         if (head == null) {
             return;
         }
-        System.out.print(head.value + " ");
+        System.out.print(head.val + " ");
         preOrderRecur(head.left);
         preOrderRecur(head.right);
     }
@@ -25,7 +25,7 @@ public class TraverseTree {
             return;
         }
         inOrderRecur(head.left);
-        System.out.print(head.value + " ");
+        System.out.print(head.val + " ");
         inOrderRecur(head.right);
     }
 
@@ -35,7 +35,7 @@ public class TraverseTree {
         }
         posOrderRecur(head.left);
         posOrderRecur(head.right);
-        System.out.print(head.value + " ");
+        System.out.print(head.val + " ");
     }
 
     // 非递归
@@ -46,7 +46,7 @@ public class TraverseTree {
             stack.add(head);
             while (!stack.isEmpty()) {
                 head = stack.pop();
-                System.out.print(head.value + " ");
+                System.out.print(head.val + " ");
                 if (head.right != null) {
                     stack.push(head.right);
                 }
@@ -68,7 +68,7 @@ public class TraverseTree {
                     head = head.left;
                 } else {
                     head = stack.pop();
-                    System.out.print(head.value + " ");
+                    System.out.print(head.val + " ");
                     head = head.right;
                 }
             }
@@ -93,7 +93,7 @@ public class TraverseTree {
                 }
             }
             while (!s2.isEmpty()) {
-                System.out.print(s2.pop().value + " ");
+                System.out.print(s2.pop().val + " ");
             }
         }
         System.out.println();
@@ -112,7 +112,7 @@ public class TraverseTree {
                 } else if (c.right != null && h != c.right) {
                     stack.push(c.right);
                 } else {
-                    System.out.print(stack.pop().value + " ");
+                    System.out.print(stack.pop().val + " ");
                     h = c;
                 }
             }

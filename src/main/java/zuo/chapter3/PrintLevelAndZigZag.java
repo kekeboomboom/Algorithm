@@ -28,7 +28,7 @@ public class PrintLevelAndZigZag {
         System.out.print("Level " + (level++) + " : ");
         while (!queue.isEmpty()) {
             head = queue.poll();
-            System.out.print(head.value + " ");
+            System.out.print(head.val + " ");
             if (head.left != null) {
                 queue.offer(head.left);
                 nLast = head.left;
@@ -86,7 +86,7 @@ public class PrintLevelAndZigZag {
                     dp.offerFirst(head.left);
                 }
             }
-            System.out.println(head.value + " ");
+            System.out.println(head.val + " ");
             if (head == last && !dp.isEmpty()) {
                 lr = !lr;
                 last = nLast;
@@ -141,7 +141,7 @@ public class PrintLevelAndZigZag {
                     nLast = nLast == null ? head.left : nLast;
                 }
             }
-            tmp.add(head.value);
+            tmp.add(head.val);
             if (head == last) {
                 lr = !lr;
                 last = nLast;
@@ -166,9 +166,9 @@ public class PrintLevelAndZigZag {
             for (int i = queue.size(); i > 0; i--) {
                 TreeNode node = queue.poll();
                 if (res.size() % 2 == 0) {
-                    tmp.addLast(node.value);
+                    tmp.addLast(node.val);
                 } else {
-                    tmp.addFirst(node.value);
+                    tmp.addFirst(node.val);
                 }
                 if (node.left != null) {
                     queue.add(node.left);
