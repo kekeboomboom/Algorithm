@@ -12,13 +12,7 @@ import java.util.Random;
  */
 public class QuickSort {
 
-    /**
-     * 这是以high为基准值的
-     *
-     * @param arr
-     * @param low
-     * @param high
-     */
+    /*
     public void sort(int[] arr, int low, int high) {
         if (low < high) {
             int pi = partition2(arr, low, high);
@@ -28,13 +22,7 @@ public class QuickSort {
         }
     }
 
-    /**
-     * 以右边为基准值
-     * @param arr
-     * @param low
-     * @param high
-     * @return
-     */
+
     public int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = (low - 1);
@@ -54,14 +42,7 @@ public class QuickSort {
         return i + 1;
     }
 
-    /**
-     * 是我理解错了，并不是因为左右选择而导致算法不一样，无论左右都可以用快慢指针来partition
-     * 下面就是以left为基准值，来进行快慢指针
-     * @param arr
-     * @param left
-     * @param right
-     * @return
-     */
+
     public int partition2(int[] arr, int left, int right) {
         int pivot = arr[left];
         int j = left;
@@ -75,11 +56,8 @@ public class QuickSort {
         return j;
     }
 
-    private static void swap(int[] arr, int index1, int index2) {
-        int temp = arr[index1];
-        arr[index1] = arr[index2];
-        arr[index2] = temp;
-    }
+
+     */
 
 
     public static void main(String[] args) {
@@ -102,6 +80,8 @@ public class QuickSort {
         System.out.println(Arrays.toString(arr));
     }
 
+    // 就记这个快排的代码吧，简洁！！
+    // 最佳时间复杂度 o(n) , 最差 o(nlogn)
     public int[] quickSort222(int[] nums, int left, int right) {
         if (left < right) {
             int i = partition222(nums, left, right);
@@ -124,4 +104,10 @@ public class QuickSort {
         swap(nums, left, i);
         return i;
     }
+    private static void swap(int[] arr, int index1, int index2) {
+        int temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+    }
+
 }
