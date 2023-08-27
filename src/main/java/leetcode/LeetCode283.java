@@ -1,5 +1,7 @@
 package leetcode;
 
+import java.util.Arrays;
+
 /**
  * @author keboom
  * @date 2021/8/6
@@ -42,5 +44,36 @@ public class LeetCode283 {
                 j++;
             }
         }
+    }
+
+    /**
+     * 遍历数组，如果当前为0，则向后交换一个不为0的数字
+     * @param nums
+     */
+    public void moveZeroes3(int[] nums) {
+        if (nums.length == 1) {
+            return;
+        }
+        int index = 0;
+        while (index < nums.length) {
+            if (nums[index] == 0) {
+                int tmp = index + 1;
+                while (tmp<nums.length && nums[tmp] == 0) {
+                    tmp++;
+                }
+                if (tmp == nums.length) {
+                    break;
+                }
+                swap(nums, index, tmp);
+            }
+            index++;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {0, 0};
+        LeetCode283 leetCode283 = new LeetCode283();
+        leetCode283.moveZeroes3(nums);
+        System.out.println(Arrays.toString(nums));
     }
 }
