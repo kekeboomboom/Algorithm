@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,5 +23,27 @@ public class LeetCode94 {
         inorder(root.left, res);
         res.add(root.val);
         inorder(root.right, res);
+    }
+
+    /**
+     *  非递归的中序遍历
+     *  其实仔细看这个中序遍历，简直跟递归的调用栈一模一样~！！！
+     * @param root
+     * @return
+     */
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        List<Integer> res = new LinkedList<>();
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
+                stack.push(root);
+                root = root.left;
+            } else {
+                TreeNode pop = stack.pop();
+                res.add(pop.val);
+                root = pop.right;
+            }
+        }
+        return res;
     }
 }
