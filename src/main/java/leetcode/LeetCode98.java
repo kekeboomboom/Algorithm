@@ -6,7 +6,7 @@ package leetcode;
  */
 public class LeetCode98 {
 
-    public int pre = Integer.MIN_VALUE;
+    public long pre = Long.MIN_VALUE;
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;
@@ -22,5 +22,10 @@ public class LeetCode98 {
             return false;
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(1L < 2);
     }
 }
