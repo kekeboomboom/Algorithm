@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import leetcode.TreeNode;
 
 /**
  * @author keboom
@@ -8,24 +9,43 @@ import leetcode.TreeNode;
  */
 public class Main {
     public static void main(String[] args) {
-
+        Main main = new Main();
+        main.letterCombinations("23");
+        System.out.println();
     }
 
-    public List<Integer> inorderTraversal(TreeNode root) {
-        if (root == null) {
+
+    HashMap<String, String> phoneNum = new HashMap<>();
+    StringBuilder tmp = new StringBuilder();
+    List<String> res = new LinkedList<>();
+
+    public List<String> letterCombinations(String digits) {
+        if (digits.length() == 0) {
             return new ArrayList<>();
         }
-        ArrayList<Integer> list = new ArrayList<>();
-        inorder(root, list);
-        return list;
+        phoneNum.put("2", "abc");
+        phoneNum.put("3", "def");
+        phoneNum.put("4", "ghi");
+        phoneNum.put("5", "jkl");
+        phoneNum.put("6", "mno");
+        phoneNum.put("7", "pqrs");
+        phoneNum.put("8", "tuv");
+        phoneNum.put("9", "wxyz");
+
+        backtracking(digits, 0);
+        return res;
     }
 
-    private void inorder(TreeNode root, ArrayList<Integer> list) {
-        if (root == null){
+    private void backtracking(String digits, int index) {
+        if (index == digits.length()) {
+            res.add(tmp.toString());
             return;
         }
-        inorder(root.left, list);
-        list.add(root.val);
-        inorder(root.right, list);
+        String numCharacters = phoneNum.get(String.valueOf(digits.charAt(index)));
+        for (int i = 0; i < numCharacters.length(); i++) {
+            tmp.append(numCharacters.charAt(i));
+            backtracking(digits, index + 1);
+            tmp.deleteCharAt(tmp.length() - 1);
+        }
     }
 }

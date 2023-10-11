@@ -1,6 +1,9 @@
 package leetcode;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * {@code @author:} keboom
@@ -8,48 +11,52 @@ import java.util.LinkedList;
  */
 public class LeetCode501 {
 
-    int maxCount=0;
-    int curCount=0;
-    int curVal = Integer.MIN_VALUE;
-    LinkedList<Integer> result = new LinkedList<>();
+    HashSet<Integer> set = new HashSet<>();
+    int maxCount = 0;
+    int curCount = 0;
+    int pre = Integer.MAX_VALUE;
     public int[] findMode(TreeNode root) {
-        findMode2(root);
-        int[] ints = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            ints[i] = result.pop();
+
+        inorder(root);
+        int[] res = new int[set.size()];
+        Iterator<Integer> iterator = set.iterator();
+        int i=0;
+        while (iterator.hasNext()) {
+            res[i++] = iterator.next();
         }
-        return ints;
+        return res;
     }
 
-    private void findMode2(TreeNode root) {
+    void inorder(TreeNode root) {
         if (root == null) {
             return;
         }
-        findMode2(root.left);
-        if (curVal == Integer.MIN_VALUE) {
-            curVal = root.val;
+        inorder(root.left);
+        if (root.val == pre) {
             curCount++;
-            result.add(curVal);
-            maxCount = 1;
-        } else if (curVal == root.val) {
-            curCount++;
-            if (curCount == maxCount) {
-                result.add(curVal);
-            } else if (curCount > maxCount) {
-                result = new LinkedList<>();
-                result.add(curVal);
-                maxCount = curCount;
-            }
         } else {
-            if (curCount == maxCount) {
-                result.add(curVal);
-            } else if (curCount > maxCount) {
-                result = new LinkedList<>();
-                result.add(curVal);
-            }
             curCount = 1;
-            curVal = root.val;
         }
-        findMode2(root.right);
+        if (curCount == maxCount) {
+            set.add(root.val);
+        } else if (curCount > maxCount) {
+            set.clear();
+            set.add(root.val);
+            maxCount = curCount;
+        }
+        pre = root.val;
+        inorder(root.right);
     }
+
+    public static void main(String[] args) {
+        TreeNode treeNode1 = new TreeNode(1);
+        treeNode1.right = new TreeNode(2);
+        treeNode1.right.left = new TreeNode(2);
+
+        LeetCode501 leetCode501 = new LeetCode501();
+        int[] mode = leetCode501.findMode(treeNode1);
+
+
+    }
+
 }
