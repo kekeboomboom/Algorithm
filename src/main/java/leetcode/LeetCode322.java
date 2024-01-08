@@ -28,6 +28,11 @@ public class LeetCode322 {
     }
 
 
+    public static void main(String[] args) {
+        int[] coins = {1, 2, 5};
+        LeetCode322 leetCode322 = new LeetCode322();
 
+        leetCode322.coinChange(coins, 11);
+    }
 
 }
