@@ -22,13 +22,9 @@ public class LeetCode406 {
     }
 
     public static void main(String[] args) {
-        LinkedList<Integer> list = new LinkedList<>();
-        list.add(0, 90);
-        list.add(1, 70);
-        list.add(1, 80);
-        list.add(1,20);
-        for (Integer integer : list) {
-            System.out.println(integer);
-        }
+        LeetCode406 leetCode406 = new LeetCode406();
+        int[][] people = {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}};
+        int[][] ints = leetCode406.reconstructQueue(people);
+
     }
 }
