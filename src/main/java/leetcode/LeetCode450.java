@@ -9,21 +9,14 @@ import com.sun.java.swing.plaf.windows.WindowsTableHeaderUI;
 public class LeetCode450 {
 
     /**
-     * 先找到相应的位置，然后将原来的节点删掉，将原来的节点的左节点替换上去。
-     * 替换的节点的左子树不变，右子树放到原来节点的右节点的最左边
+     * 总体思路，如删除当前节点，则左子树补上来，右子树放在左子树的最右边
+     * <p>
+     * 具体细节：
+     * 如果左子树存在，右子树不存在：直接将左子树补上来即可
+     * 左有，右有：左补上来，右放在左的最右边
+     * 左无，右有：右补上来
+     * 左无，右无：删除当前节点后什么也不做
      *
-     *                      100
-     *           9                        150
-     *       5      20               125        175
-     *   2     7  15    25
-     *
-     * 删除9
-     *
-     *                         100
-     *          5                         150
-     *      2          20                 125       175
-     *              15    25
-     *            7
      * @param root
      * @param key
      * @return
@@ -32,76 +25,26 @@ public class LeetCode450 {
         if (root == null) {
             return null;
         }
-        if (root.val == key) {
-            if (root.left != null) {
-                TreeNode delLeft = root.left;
-                TreeNode delRight = root.right;
-                root = delLeft;
-                TreeNode delLeftRightestNode = delLeft.right;
-                if (delLeftRightestNode == null) {
-                    delLeft.right = delRight;
-                } else {
-                    while (delLeftRightestNode.right != null) {
-                        delLeftRightestNode = delLeftRightestNode.right;
-                    }
-                    delLeftRightestNode.right = delRight;
-                }
-            } else {
-                root = root.right;
-            }
-            return root;
-        }
-        deleteNode2(root, key);
-        return root;
-    }
-
-    private void deleteNode2(TreeNode root, int key) {
-        if (root == null) {
-            return;
-        }
-        if (root.left != null && root.left.val == key) {
-            if (root.left.left != null) {
-                TreeNode delRight = root.left.right;
-                TreeNode delLeft = root.left.left;
-                root.left = delLeft;
-                TreeNode delLeftRightestNode = delLeft.right;
-                if (delLeftRightestNode == null) {
-                    delLeft.right = delRight;
-                } else {
-                    while (delLeftRightestNode.right != null) {
-                        delLeftRightestNode = delLeftRightestNode.right;
-                    }
-                    delLeftRightestNode.right = delRight;
-                }
-            } else {
-                root.left = root.left.right;
-            }
-            return;
-        }
-        if (root.right != null && root.right.val == key) {
-            if (root.right.left != null) {
-                TreeNode delRight = root.right.right;
-                TreeNode delLeft = root.right.left;
-                root.right = delLeft;
-                TreeNode delLeftRightestNode = delLeft.right;
-                if (delLeftRightestNode == null) {
-                    delLeft.right = delRight;
-                } else {
-                    while (delLeftRightestNode.right != null) {
-                        delLeftRightestNode = delLeftRightestNode.right;
-                    }
-                    delLeftRightestNode.right = delRight;
-                }
-            } else {
-                root.right = root.right.right;
-            }
-            return;
-        }
         if (root.val > key) {
-            deleteNode2(root.left, key);
+            root.left = deleteNode(root.left, key);
+        } else if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null && root.right == null) {
+                return null;
+            } else if (root.left == null && root.right != null) {
+                return root.right;
+            } else if (root.left != null && root.right == null) {
+                return root.left;
+            } else {
+                TreeNode left = root.left;
+                while (left.right != null) {
+                    left = left.right;
+                }
+                left.right = root.right;
+                return root.left;
+            }
         }
-        if (root.val < key) {
-            deleteNode2(root.right, key);
-        }
+        return root;
     }
 }

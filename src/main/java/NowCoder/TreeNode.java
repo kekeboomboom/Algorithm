@@ -21,13 +21,13 @@ public class TreeNode {
      * @return
      */
     public static TreeNode getTestTree() {
-        TreeNode treeNode10 = new TreeNode(1);
-        TreeNode treeNode5 = new TreeNode(4);
-        TreeNode treeNode15 = new TreeNode(2);
-        TreeNode treeNode4 = new TreeNode(3);
-        TreeNode treeNode7 = new TreeNode(4);
-        TreeNode treeNode12 = new TreeNode(2);
-        TreeNode treeNode18 = new TreeNode(3);
+        TreeNode treeNode10 = new TreeNode(10);
+        TreeNode treeNode5 = new TreeNode(5);
+        TreeNode treeNode15 = new TreeNode(15);
+        TreeNode treeNode4 = new TreeNode(4);
+        TreeNode treeNode7 = new TreeNode(7);
+        TreeNode treeNode12 = new TreeNode(12);
+        TreeNode treeNode18 = new TreeNode(18);
 
         treeNode10.left = treeNode12;
         treeNode10.right = treeNode15;
