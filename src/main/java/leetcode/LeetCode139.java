@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -30,6 +31,43 @@ public class LeetCode139 {
             }
         }
         memo[start] = -1;
+        return false;
+    }
+
+
+    /**
+     * 我们先用回溯暴力做。
+     * 每次回溯：查询当前dict是否有可以消除s的，如果有则消除。
+     * 需要进行剪枝，有dict：["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
+     * 其中使用两次aa和一次aaaa是一样的，因此可以剪枝。
+     * @param s
+     * @param wordDict
+     * @return
+     */
+    public boolean wordBreak2(String s, List<String> wordDict) {
+        HashMap<String, Boolean> map = new HashMap<>();
+        return bfs(s, wordDict, map);
+    }
+
+    private boolean bfs(String s, List<String> wordDict, HashMap<String, Boolean> map) {
+        if (s.length() == 0) {
+            return true;
+        }
+        if (map.containsKey(s)) {
+            return map.get(s);
+        }
+        for (String word : wordDict) {
+            if (s.length() < word.length()) {
+                continue;
+            }
+            if (s.substring(0, word.length()).equals(word)) {
+                boolean res= bfs(s.substring(word.length()), wordDict,map);
+                if (res) {
+                    return res;
+                }
+                map.put(s.substring(word.length()), res);
+            }
+        }
         return false;
     }
 }
