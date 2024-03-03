@@ -12,49 +12,36 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        ArrayList<String> wordDict = new ArrayList<>();
-        wordDict.add("apple");
-        wordDict.add("pen");
-        boolean leetcode = main.wordBreak("applepenapple", wordDict);
-        System.out.println(leetcode);
+        int[] prices = {7,1,5,3,6,4};
+        main.maxProfit(prices);
 
     }
 
 
     /**
-     * 我们先用回溯暴力做。
-     * 每次回溯：查询当前dict是否有可以消除s的，如果有则消除。
-     * 需要进行剪枝，有dict：["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
-     * 其中使用两次aa和一次aaaa是一样的，因此可以剪枝。
-     * @param s
-     * @param wordDict
+     * 我们使用dp来做，遇到股票买卖的问题，有一个统一的模板。
+     * dp[i][0] 表示第i天持有股票所剩最大现金。
+     * 第i-1天，没有持有 -nums[i]
+     * 第i-1天，持有 dp[i-1][0]
+     * 则 递推公式： dp[i][0] = max(-nums[i], dp[i-1][0])
+     *
+     * dp[i][1] 表示第i天不持有所剩最大现金
+     * 第i-1天，没有持有  dp[i-1][1]
+     * 第i-1天，持有  dp[i-1][0] + nums[i]
+     * 则递推公式： dp[i][0] = max(dp[i-1][1], dp[i-1][] + nums[i])
+     * @param prices
      * @return
      */
-    public boolean wordBreak(String s, List<String> wordDict) {
-        HashMap<String, Boolean> map = new HashMap<>();
-        return bfs(s, wordDict, map);
-    }
-
-    private boolean bfs(String s, List<String> wordDict, HashMap<String, Boolean> map) {
-        if (s.length() == 0) {
-            return true;
+    public int maxProfit(int[] prices) {
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = -prices[0];
+        dp[0][1] = 0;
+        for (int i = 1; i < prices.length; i++) {
+            dp[i][0] = Math.max(-prices[i], dp[i - 1][0]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + prices[i]);
         }
-        if (map.containsKey(s)) {
-            return map.get(s);
-        }
-        for (String word : wordDict) {
-            if (s.length() < word.length()) {
-                continue;
-            }
-            if (s.substring(0, word.length()).equals(word)) {
-                boolean res= bfs(s.substring(word.length()), wordDict,map);
-                if (res) {
-                    return res;
-                }
-                map.put(s.substring(word.length()), res);
-            }
-        }
-        return false;
+        int result = Math.max(dp[prices.length - 1][0], dp[prices.length - 1][1]);
+        return Math.max(result, 0);
     }
 
 
