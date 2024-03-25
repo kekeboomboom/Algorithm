@@ -60,6 +60,7 @@ public class LeetCode72 {
             }
         }
         return dp[word1.length() - 1][word2.length() - 1];
+
     }
 
     public static void main(String[] args) {
