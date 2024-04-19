@@ -4,6 +4,7 @@ import leetcode.TreeNode;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * @author keboom
@@ -12,47 +13,30 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
+        int[] nums = {2, 3, 1, 1, 4};
+
 
 
     }
 
-
-    /**
-     * 挑选出不同的，然后在重新复制到nums 中
-     * @param nums
-     * @return
-     */
-    public int removeDuplicates(int[] nums) {
-        LinkedList<Integer> list = new LinkedList<>();
-        for (int num : nums) {
-            if (list.isEmpty()) {
-                list.add(num);
-            } else {
-                if (list.getLast() != num) {
-                    list.add(num);
-                }
+    public int trap(int[] height) {
+        int len = height.length;
+        int[] maxLeft = new int[len];
+        int[] maxRight = new int[len];
+        for (int i = 1; i < len - 1; i++) {
+            maxLeft[i] = Math.max(maxLeft[i - 1], height[i - 1]);
+        }
+        for (int i = len - 2; i > 0; i--) {
+            maxRight[i] = Math.max(maxRight[i + 1], height[i + 1]);
+        }
+        int sum=0;
+        for (int i = 1; i < len - 1; i++) {
+            int minH = Math.min(maxLeft[i], maxRight[i]);
+            if (minH > height[i]) {
+                sum += minH - height[i];
             }
         }
-        for (int i = 0; i < list.size(); i++) {
-            nums[i] = list.get(i);
-        }
-        return list.size();
-    }
-
-    /**
-     * 双指针法
-     * @param nums
-     * @return
-     */
-    public int removeDuplicates2(int[] nums) {
-        int left = 0;
-        for (int right = 0; right < nums.length; right++) {
-            if (nums[left] != nums[right]) {
-                left++;
-                nums[left] = nums[right];
-            }
-        }
-        return left+1;
+        return sum;
     }
 
 }

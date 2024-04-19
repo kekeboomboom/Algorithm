@@ -54,6 +54,28 @@ public class LeetCode238 {
         return ans;
     }
 
+
+    /**
+     * 又有一种方法！！！！！呵呵，不过思路跟上面的一样，但是代码好像简洁了些
+     * @param nums
+     * @return
+     */
+    public int[] productExceptSelf3(int[] nums) {
+        int[] answer = new int[nums.length];
+        answer[0] = 1;
+        int prefix = 1;
+        for (int i = 1; i < nums.length; i++) {
+            prefix *= nums[i - 1];
+            answer[i] = prefix;
+        }
+        int suffix = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            suffix *= nums[i + 1];
+            answer[i] *= suffix;
+        }
+        return answer;
+    }
+
     public static void main(String[] args) {
         LeetCode238 leetCode238 = new LeetCode238();
         int[] nums = {1, 2, 3, 4};

@@ -45,6 +45,33 @@ public class LeetCode45 {
         return minJumps;
     }
 
+    /**
+     * 站在当前位置，寻找下一步能跳最远的位置
+     * 再一次写，又会有另一种写法，哈哈
+     * @param nums
+     * @return
+     */
+    public int jump2(int[] nums) {
+        int curPos = 0;
+        int arriveFarther = curPos + nums[curPos];
+        int step = 0;
+        while (curPos < nums.length-1) {
+            int nextStep = curPos + 1;
+            for (int i = curPos+1; i <= arriveFarther; i++) {
+                if (i == nums.length - 1) {
+                    return ++step;
+                }
+                if ((i + nums[i]) >= (nextStep + nums[nextStep])) {
+                    nextStep = i;
+                }
+            }
+            curPos = nextStep;
+            arriveFarther = nextStep + nums[nextStep];
+            step++;
+        }
+        return step;
+    }
+
     public static void main(String[] args) {
         LeetCode45 leetCode45 = new LeetCode45();
         int[] nums = {2, 3, 1, 1, 4};
