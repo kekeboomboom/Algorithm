@@ -19,24 +19,33 @@ public class Main {
 
     }
 
-    public int trap(int[] height) {
-        int len = height.length;
-        int[] maxLeft = new int[len];
-        int[] maxRight = new int[len];
-        for (int i = 1; i < len - 1; i++) {
-            maxLeft[i] = Math.max(maxLeft[i - 1], height[i - 1]);
-        }
-        for (int i = len - 2; i > 0; i--) {
-            maxRight[i] = Math.max(maxRight[i + 1], height[i + 1]);
-        }
-        int sum=0;
-        for (int i = 1; i < len - 1; i++) {
-            int minH = Math.min(maxLeft[i], maxRight[i]);
-            if (minH > height[i]) {
-                sum += minH - height[i];
+
+    /**
+     * 之前到看一种解法，先是反转整个字符串，然后再反转每个单词
+     * @param s
+     * @return
+     */
+    public String reverseWords(String s) {
+        String reverseStr = reverseStr(s.trim());
+
+        String[] split = reverseStr.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (String str : split) {
+            if (str.trim().isEmpty()) {
+                continue;
             }
+            result.append(reverseStr(str) + " ");
         }
-        return sum;
+        result.deleteCharAt(result.length() - 1);
+        return result.toString();
+    }
+
+    private String reverseStr(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = s.length() - 1; i >= 0; i--) {
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
     }
 
 }
