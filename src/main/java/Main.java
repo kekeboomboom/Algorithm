@@ -1,10 +1,4 @@
-import SwordPointToOffer.JZ;
-import common.ListNode;
-import leetcode.TreeNode;
-
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * @author keboom
@@ -15,37 +9,36 @@ public class Main {
         Main main = new Main();
         int[] nums = {2, 3, 1, 1, 4};
 
+        LinkedList<Integer> integers = new LinkedList<>();
 
-
+        integers.add(111);
+        integers.add(222);
+        integers.poll();
+        System.out.println(integers.toString());
     }
 
 
-    /**
-     * 之前到看一种解法，先是反转整个字符串，然后再反转每个单词
-     * @param s
-     * @return
-     */
-    public String reverseWords(String s) {
-        String reverseStr = reverseStr(s.trim());
-
-        String[] split = reverseStr.split(" ");
-        StringBuilder result = new StringBuilder();
-        for (String str : split) {
-            if (str.trim().isEmpty()) {
-                continue;
-            }
-            result.append(reverseStr(str) + " ");
+    public void rotate(int[][] matrix) {
+        LinkedList<Integer> tmp = new LinkedList<>();
+        int topRow = 0;
+        int topCol = 0;
+        int bottomRow = matrix.length - 1;
+        int bottomCol = matrix[0].length - 1;
+        while (topRow <= bottomRow && topCol <= bottomCol) {
+            traverse2(matrix, topRow++, topCol++, bottomRow--, bottomCol--, tmp);
         }
-        result.deleteCharAt(result.length() - 1);
-        return result.toString();
     }
 
-    private String reverseStr(String s) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = s.length() - 1; i >= 0; i--) {
-            sb.append(s.charAt(i));
+    private void traverse2(int[][] matrix, int topRow, int topCol, int bottomRow, int bottomCol, LinkedList<Integer> tmp) {
+        int curRow = topRow;
+        int curCol = topCol;
+        while (curCol < bottomCol) {
+            tmp.add(matrix[curCol][bottomCol]);
+            matrix[curCol++][bottomCol] = matrix[curRow][curCol];
         }
-        return sb.toString();
+        while (curRow < bottomRow) {
+            tmp.add(matrix[bottomRow][bottomCol]);
+            matrix[curCol][bottomCol] = tmp.poll();
+        }
     }
-
 }

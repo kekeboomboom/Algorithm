@@ -37,4 +37,22 @@ public class LeetCode209 {
         }
         return minLen == Integer.MAX_VALUE ? 0 : minLen;
     }
+
+
+    public int minSubArrayLen2(int target, int[] nums) {
+        int result = Integer.MAX_VALUE;
+        int left = 0;
+        int sum = 0;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            if (sum >= target) {
+                while (sum - nums[left] >= target) {
+                    sum -= nums[left];
+                    left++;
+                }
+                result = Math.min(result, right - left + 1);
+            }
+        }
+        return result == Integer.MAX_VALUE ? 0 : result;
+    }
 }

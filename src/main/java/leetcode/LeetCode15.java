@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class LeetCode15 {
 
-    public static List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
         int len = nums.length;
         if (nums == null || len < 3) {

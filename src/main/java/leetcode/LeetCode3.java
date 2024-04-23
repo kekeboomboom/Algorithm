@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author keboom
@@ -23,6 +24,21 @@ public class LeetCode3 {
             res = Math.max(res, j - i);
         }
         return res;
+    }
+
+    public int lengthOfLongestSubstring3(String s) {
+        HashSet<Character> set = new HashSet<>();
+        int left = 0;
+        int result = 0;
+        for (int right = 0; right < s.length(); right++) {
+            while (set.contains(s.charAt(right))) {
+                set.remove(s.charAt(left));
+                left++;
+            }
+            set.add(s.charAt(right));
+            result = Math.max(result, right - left + 1);
+        }
+        return result;
     }
 
     /**
