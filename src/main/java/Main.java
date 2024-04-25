@@ -7,14 +7,9 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        int[] nums = {2, 3, 1, 1, 4};
+        int[][] matrix = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
+        main.rotate(matrix);
 
-        LinkedList<Integer> integers = new LinkedList<>();
-
-        integers.add(111);
-        integers.add(222);
-        integers.poll();
-        System.out.println(integers.toString());
     }
 
 
@@ -34,11 +29,22 @@ public class Main {
         int curCol = topCol;
         while (curCol < bottomCol) {
             tmp.add(matrix[curCol][bottomCol]);
-            matrix[curCol++][bottomCol] = matrix[curRow][curCol];
+            matrix[curCol][bottomCol] = matrix[curRow][curCol];
+            curCol++;
         }
         while (curRow < bottomRow) {
-            tmp.add(matrix[bottomRow][bottomCol]);
-            matrix[curCol][bottomCol] = tmp.poll();
+            tmp.add(matrix[bottomRow][bottomCol - (curRow - topRow)]);
+            matrix[bottomRow][bottomCol - (curRow - topRow)] = tmp.poll();
+            curRow++;
+        }
+        while (curCol > topCol) {
+            tmp.add(matrix[curCol][topCol]);
+            matrix[curCol][topCol] = tmp.poll();
+            curCol--;
+        }
+        while (curRow > topRow) {
+            matrix[topRow][bottomCol - (curRow-topRow)] = tmp.poll();
+            curRow--;
         }
     }
 }
