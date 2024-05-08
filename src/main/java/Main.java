@@ -16,27 +16,38 @@ public class Main {
 
 
     /**
-     * 虚拟头节点。cur 是遍历到的当前节点。判断下一个和下下一个节点是不是重复，如果重复，删除。得到重复节点的 val，next 指针不停往下走
-     * 如果 val 等于重复节点的，则不管，直到 val 不等于重复节点。则 cur 指向 next
-     * @param head
+     * 岛屿问题，套模版。21年做过，左神。
+     * @param grid
      * @return
      */
-    public ListNode deleteDuplicates(ListNode head) {
-        ListNode dummy = new ListNode();
-        dummy.next = head;
-        ListNode cur = dummy;
-        while (cur.next != null && cur.next.next != null) {
-            if (cur.next.val == cur.next.next.val) {
-                int duplicateVal = cur.next.val;
-                ListNode next = cur.next.next;
-                while (next != null && next.val == duplicateVal) {
-                    next = next.next;
+    public int numIslands(char[][] grid) {
+        int landNum = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    land(grid, i, j);
+                    landNum++;
                 }
-                cur.next = next;
-            } else {
-                cur = cur.next;
             }
         }
-        return dummy.next;
+        return landNum;
+    }
+
+    private void land(char[][] grid, int row, int col) {
+        if (!isArea(grid, row, col)) {
+            return;
+        }
+        if (grid[row][col] != '1') {
+            return;
+        }
+        grid[row][col] = '2';
+        land(grid, row - 1, col);
+        land(grid, row + 1, col);
+        land(grid, row, col - 1);
+        land(grid, row, col + 1);
+    }
+
+    private boolean isArea(char[][] grid, int row, int col) {
+        return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
     }
 }
