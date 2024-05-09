@@ -9,45 +9,73 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
+        ListNode listNode1 = new ListNode(1);
+        ListNode listNode2 = new ListNode(2);
+        ListNode listNode3 = new ListNode(3);
+        ListNode listNode4 = new ListNode(4);
+        ListNode listNode5 = new ListNode(5);
+        listNode1.next = listNode2;
+        listNode2.next = listNode3;
+        listNode3.next = listNode4;
+        listNode4.next = listNode5;
 
-        System.out.println(7 / 10);
-
+        main.rotateRight(listNode1, 2);
     }
 
 
     /**
-     * 岛屿问题，套模版。21年做过，左神。
-     * @param grid
+     * 倒置后 k 个链表，
+     *
+     * @param head
+     * @param k
      * @return
      */
-    public int numIslands(char[][] grid) {
-        int landNum = 0;
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == '1') {
-                    land(grid, i, j);
-                    landNum++;
-                }
-            }
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next ==null) {
+            return head;
         }
-        return landNum;
+        int len = getLen(head);
+        k = k % len;
+        if (k == 0) {
+            return head;
+        }
+        ListNode kLast = findKLast(head, k);
+        ListNode newHead = kLast.next;
+        ListNode tail = newHead;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        tail.next = head;
+        kLast.next = null;
+        return newHead;
     }
 
-    private void land(char[][] grid, int row, int col) {
-        if (!isArea(grid, row, col)) {
-            return;
+    private int getLen(ListNode head) {
+        int len = 0;
+        while (head != null) {
+            len++;
+            head = head.next;
         }
-        if (grid[row][col] != '1') {
-            return;
-        }
-        grid[row][col] = '2';
-        land(grid, row - 1, col);
-        land(grid, row + 1, col);
-        land(grid, row, col - 1);
-        land(grid, row, col + 1);
+        return len;
     }
 
-    private boolean isArea(char[][] grid, int row, int col) {
-        return row >= 0 && row < grid.length && col >= 0 && col < grid[0].length;
+    /**
+     * 返回倒数第 k + 1 个节点
+     *
+     * @param head
+     * @return
+     */
+    private ListNode findKLast(ListNode head, int k) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (k >= 0) {
+            k--;
+            fast = fast.next;
+        }
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
     }
 }
