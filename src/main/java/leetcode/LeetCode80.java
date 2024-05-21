@@ -13,7 +13,7 @@ public class LeetCode80 {
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
         for (int num : nums) {
             if (map.containsKey(num)) {
-                if (map.get(num)== 1) {
+                if (map.get(num) == 1) {
                     map.put(num, 2);
                 }
             } else {
@@ -34,6 +34,7 @@ public class LeetCode80 {
      * 上面是保底做法，肯定还是还要用双指针法。
      * 除了双指针，还要有一个计数，记录right 当前遍历元素的个数，这样 left 可以知道应该走一步还是两步。
      * 还有，当我们遍历的结尾还不算完，如果元素有两个以上的话，实际上 left 只替换了一个
+     *
      * @param nums
      * @return
      */
@@ -72,5 +73,21 @@ public class LeetCode80 {
 
 
     }
+
+
+    public int removeDuplicates3(int[] nums) {
+        return process(nums, 2);
+    }
+
+    int process(int[] nums, int k) {
+        int u = 0;
+        for (int x : nums) {
+            if (u < 2 || nums[u - 2] != x) {
+                nums[u++] = x;
+            }
+        }
+        return u;
+    }
+
 
 }

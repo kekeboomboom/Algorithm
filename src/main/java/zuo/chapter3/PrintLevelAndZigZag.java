@@ -182,17 +182,7 @@ public class PrintLevelAndZigZag {
         return res;
     }
 
-//    public static void main(String[] args) {
-//        List<List<Integer>> lists = exc.levelOrder2(TreeNode.getTestTree());
-//        System.out.println(lists.size());
-//        for (int i = 0; i < lists.size(); i++) {
-//            List<Integer> list = lists.get(i);
-//            System.out.println();
-//            for (Integer integer : list) {
-//                System.out.print(integer + " ");
-//            }
-//        }
-//    }
+
 
 
 }

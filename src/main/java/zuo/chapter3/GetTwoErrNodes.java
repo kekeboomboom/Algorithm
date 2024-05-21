@@ -66,9 +66,5 @@ public class GetTwoErrNodes {
         return errs;
     }
 
-    public static void main(String[] args) {
-        TreeNode head = TreeNode.getTestTree();
-        TreeNode[] errs = GetTwoErrNodes.getTwoErrNodes2(head);
-        System.out.println(errs[0].val + "  " + errs[1].val);
-    }
+
 }

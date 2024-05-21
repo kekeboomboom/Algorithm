@@ -103,11 +103,5 @@ public class IsBSTCBT {
         return true;
     }
 
-    public static void main(String[] args) {
-        IsBSTCBT is = new IsBSTCBT();
-//        Node head = Node.getBSTTree();
-        TreeNode head = TreeNode.getTestTree();
-        System.out.println(is.isBST(head));
-        System.out.println(is.isBST2(head));
-    }
+
 }
