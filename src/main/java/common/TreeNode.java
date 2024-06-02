@@ -99,7 +99,29 @@ public class TreeNode {
         }
     }
 
+    public static void level(TreeNode head) {
+        if (head == null) {
+            return;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(head);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.remove();
+                System.out.print(node.val+" ");
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
-        TreeNode.InOrderUnRecursion(getBSTTree());
+        TreeNode.level(getBSTTree());
     }
 }
