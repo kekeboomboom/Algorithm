@@ -2,10 +2,8 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import common.ListNode;
 import common.TreeNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -16,69 +14,46 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
 
+        System.out.println(Integer.parseInt("001"));
+
     }
 
 
-    public int countNodes(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int left = countNodes(root.left);
-        int right = countNodes(root.right);
-        return left + right + 1;
-    }
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        }
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
-        if (root == p) {
-            return root;
-        }
-        if (root == q) {
-            return root;
-        }
-        if (left == null && right == null) {
-            return null;
-        } else if (left == null && right != null) {
-            return right;
-        } else if (left != null && right == null) {
-            return left;
-        } else {
-            return root;
-        }
-    }
-
-    /**
-     * 层序遍历更方便
-     *
-     * @param root
-     * @return
-     */
-    public List<Integer> rightSideView(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
-        }
-        ArrayList<Integer> list = new ArrayList<>();
-        LinkedList<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.remove();
-                if (i == 0) {
-                    list.add(node.val);
-                }
-                if (node.right != null) {
-                    queue.add(node.right);
-                }
-                if (node.left != null) {
-                    queue.add(node.left);
-                }
+    public int compareVersion(String version1, String version2) {
+        List<Integer> v1 = Arrays.asList(version1.split(".")).stream().map(Integer::parseInt).collect(Collectors.toList());
+        List<Integer> v2 = Arrays.asList(version2.split(".")).stream().map(Integer::parseInt).collect(Collectors.toList());
+        int index = 0;
+        while (index < v1.size() && index < v2.size()) {
+            Integer value1 = v1.get(index);
+            Integer value2 = v2.get(index);
+            index++;
+            if (value1 == value2) {
+                continue;
+            } else if (value1 > value2) {
+                return 1;
+            } else {
+                return -1;
             }
         }
-        return list;
+        if (v1.size() == v2.size()) {
+            return 0;
+        } else if (v1.size() > v2.size()) {
+            while (index < v1.size()) {
+                if (v1.get(index) > 0) {
+                    return 1;
+                }
+                index++;
+            }
+            return 0;
+        } else {
+            while (index < v2.size()) {
+                if (v2.get(index) > 0) {
+                    return -1;
+                }
+                index++;
+            }
+            return 0;
+        }
     }
 }
